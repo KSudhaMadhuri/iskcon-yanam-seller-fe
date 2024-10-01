@@ -1,0 +1,16 @@
+body::-webkit-scrollbar{
+    display: none;
+}
+
+/* signup and login page styling */
+.eye-open{
+    position:absolute;
+    right: 15px;
+    top: 10px;
+}
+
+.eye-close{
+    position:absolute;
+    right: 15px;
+    top: 10px;
+}
