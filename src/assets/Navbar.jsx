@@ -1,11 +1,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { userContext } from "../App";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const { user, setUser } = useContext(userContext);
 
   // Handle clicks outside of dropdown or mobile menu
   useEffect(() => {
@@ -93,26 +95,38 @@ export default function Navbar() {
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                <Link
-                  to="/"
-                  className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                  aria-current="page"
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/products"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  Products
-                </Link>
+                {user.role === "admin" && (
+                  <>
+                    <Link
+                      to="/"
+                      className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                      aria-current="page"
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      to="/products"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    >
+                      Products
+                    </Link>
 
-                <Link
-                  to="/orders"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  Orders
-                </Link>
+                    <Link
+                      to="/orders"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    >
+                      Orders
+                    </Link>
+                  </>
+                )}
+                {user.admin === "admin" && (
+                  <Link
+                    to="/admin"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Admin
+                  </Link>
+                )}
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -129,6 +143,12 @@ export default function Navbar() {
                 >
                   Sign up
                 </Link>
+                <Link
+                  to="/admin"
+                  className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  Admin
+                </Link>
               </div>
             </div>
           </div>
@@ -139,25 +159,38 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="sm:hidden" id="mobile-menu" ref={mobileMenuRef}>
           <div className="space-y-1 px-2 pb-3 pt-2">
-            <Link
-              to="/"
-              className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-              aria-current="page"
-            >
-              Home
-            </Link>
-            <Link
-              to="/products"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              Orders
-            </Link>
-            <Link
-              to="/orders"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              Orders
-            </Link>
+            {user.role === "admin" && (
+              <>
+                <Link
+                  to="/"
+                  className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+                  aria-current="page"
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/orders"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  Orders
+                </Link>
+                <Link
+                  to="/products"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  Products
+                </Link>
+              </>
+            )}
+
+            {user.admin === "admin" && (
+              <Link
+                to="/admin"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                Admin
+              </Link>
+            )}
             <Link
               to="/login"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white "
@@ -169,6 +202,12 @@ export default function Navbar() {
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
             >
               Sign up
+            </Link>
+            <Link
+              to="/admin"
+              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              Admin
             </Link>
           </div>
         </div>

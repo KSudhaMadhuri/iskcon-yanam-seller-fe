@@ -13,6 +13,7 @@ const SignUP = () => {
     email: "",
     password: "",
     role: "seller",
+    admin: "seller",
   });
   const navigate = useNavigate();
   const [spinner, setSpinner] = useState(false);
@@ -44,12 +45,12 @@ const SignUP = () => {
   return (
     <>
       <ToastContainer
-  position="top-center"
-  toastClassName="bg-black text-white"
-  hideProgressBar={true}
-  closeOnClick={true}
-  pauseOnHover={true}
-/>
+        position="top-center"
+        toastClassName="bg-black text-white"
+        hideProgressBar={true}
+        closeOnClick={true}
+        pauseOnHover={true}
+      />
       <div className=" mt-6 flex min-h-full flex-col justify-center px-6 py-24 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
           <img
@@ -62,12 +63,7 @@ const SignUP = () => {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
-          <form
-            onSubmit={formSubmit}
-            className="space-y-6"
-            action="#"
-            method="POST"
-          >
+          <form onSubmit={formSubmit} className="space-y-6">
             <div>
               <label
                 htmlFor="fullName"
@@ -82,6 +78,7 @@ const SignUP = () => {
                   type="text"
                   autoComplete="off"
                   required
+                  maxLength={16}
                   className=" pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   placeholder="Enter your full name"
                   onChange={formHandle}
@@ -125,10 +122,12 @@ const SignUP = () => {
                   name="password"
                   type={passwordToggle ? "text" : "password"}
                   required
+                  minLength={6}
+                  maxLength={6}
                   placeholder="Create new password"
                   className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
                   onChange={formHandle}
-                  value={data.password}
+                  value={data.password.trim()}
                 />
                 {passwordToggle ? (
                   <span
