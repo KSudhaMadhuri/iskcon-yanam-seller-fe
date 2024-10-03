@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../App";
 
 export default function Navbar() {
@@ -7,7 +7,8 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
-  const { user} = useContext(userContext);
+  const { user, token , setToken} = useContext(userContext);
+  const navigate = useNavigate()
 
   // Handle clicks outside of dropdown or mobile menu
   useEffect(() => {
@@ -32,6 +33,19 @@ export default function Navbar() {
     };
   }, [dropdownRef, mobileMenuRef, dropdownOpen, mobileMenuOpen]);
 
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login")
+    }
+
+  }, [])
+
+
+  const logOut = ()=>{
+    localStorage.removeItem("token")
+    setToken("")
+  }
   return (
     <nav className="bg-gradient-to-r from-indigo-600 to-orange-500 w-full fixed top-0 z-50">
       <div className="mx-auto max-w-7xl px-2 sm:px-7 lg:px-7">
@@ -95,7 +109,7 @@ export default function Navbar() {
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-              {user && user.role === "admin" && (
+                {user && user.role === "admin" && (
                   <>
                     <Link
                       to="/"
@@ -131,19 +145,34 @@ export default function Navbar() {
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                <Link
-                  to="/login"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white text-nowrap"
-                >
-                  Log in
-                </Link>
-                <Link
-                  to="/signup"
-                  className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
-                >
-                  Sign up
-                </Link>
-                
+                {token ?
+
+
+                  <button
+                  onClick={logOut}
+                    className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
+                  >
+                    Log out
+                  </button>
+                  : <>
+
+
+                    <Link
+                      to="/login"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white text-nowrap"
+                    >
+                      Log in
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
+                    >
+                      Sign up
+                    </Link>
+                  </>
+                }
+
+
               </div>
             </div>
           </div>
@@ -186,7 +215,15 @@ export default function Navbar() {
                 Admin
               </Link>
             )}
-            <Link
+
+            {token ? 
+               <button
+                onClick={logOut}
+               className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
+             >
+               Log out
+             </button>: <>
+             <Link
               to="/login"
               className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
             >
@@ -198,7 +235,11 @@ export default function Navbar() {
             >
               Sign up
             </Link>
-            
+             
+             </>
+            }
+           
+
           </div>
         </div>
       )}

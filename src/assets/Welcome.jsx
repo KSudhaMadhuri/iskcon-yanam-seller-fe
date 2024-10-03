@@ -3,7 +3,7 @@ import { userContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
-  const { user } = useContext(userContext);
+  const { user ,token} = useContext(userContext);
   const navigate = useNavigate();
  
 
@@ -11,8 +11,10 @@ const Welcome = () => {
     if(user && user.role === "admin") {
       navigate("/");
 
+    }else if(!token){
+      navigate("/login")
     }
-  }, [navigate,user]);
+  }, [navigate,user ,token]);
 
   return (
     <section className="text-gray-600 body-font">
@@ -31,9 +33,9 @@ const Welcome = () => {
             maintained seller account.
           </p>
           <div className="flex justify-center">
-            <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-              Contact Admin
-            </button>
+            <a href="mailto:iskconyanam@gmail.com" className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+              Contact admin
+            </a>
           </div>
         </div>
       </div>
