@@ -95,7 +95,7 @@ export default function Navbar() {
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {user.role === "admin" && (
+              {user && user.role === "admin" && (
                   <>
                     <Link
                       to="/"
@@ -119,7 +119,7 @@ export default function Navbar() {
                     </Link>
                   </>
                 )}
-                {user.admin === "admin" && (
+                {user && user.admin === "admin" && (
                   <Link
                     to="/admin"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
@@ -143,12 +143,7 @@ export default function Navbar() {
                 >
                   Sign up
                 </Link>
-                <Link
-                  to="/admin"
-                  className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  Admin
-                </Link>
+                
               </div>
             </div>
           </div>
@@ -159,7 +154,7 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="sm:hidden" id="mobile-menu" ref={mobileMenuRef}>
           <div className="space-y-1 px-2 pb-3 pt-2">
-            {user.role === "admin" && (
+            {user && user.role === "admin" && (
               <>
                 <Link
                   to="/"
@@ -183,7 +178,7 @@ export default function Navbar() {
               </>
             )}
 
-            {user.admin === "admin" && (
+            {user && user.admin === "admin" && (
               <Link
                 to="/admin"
                 className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
@@ -203,12 +198,7 @@ export default function Navbar() {
             >
               Sign up
             </Link>
-            <Link
-              to="/admin"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              Admin
-            </Link>
+            
           </div>
         </div>
       )}

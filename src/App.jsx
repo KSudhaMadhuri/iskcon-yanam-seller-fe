@@ -17,6 +17,7 @@ function App() {
   const api = import.meta.env.VITE_API;
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
+  
 
   //Retrieving token from local storage
   useEffect(() => {
@@ -28,7 +29,7 @@ function App() {
 
   //fetching seller details from server
   useEffect(() => {
-    const getUser = async () => {
+    const getSeller = async () => {
       try {
         const response = await axios.get(`${api}/seller/getseller`, {
           headers: {
@@ -36,37 +37,36 @@ function App() {
           },
         });
         if (response) {
-          setUser(response.data);
           console.log(response.data);
+          setUser(response.data.getUser);
         }
       } catch (error) {
         console.log(error);
       }
     };
-    getUser();
+    getSeller();
   }, [token]);
 
   return (
     <>
-      <userContext.Provider value={{ token, setToken,user,setUser }}>
+      <userContext.Provider value={{ token, setToken, user, setUser }}>
         <BrowserRouter>
           <Navbar />
           <Routes>
-            {user.role === 'admin'&&
-            <>
-            <Route path="/" element={<Home />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/products" element={<Products />} />
-            </>
-            }
-            {
-              user.admin==='admin' &&
+            {user && user.role === "admin" && (
+              <>
+                <Route path="/" element={<Home />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/products" element={<Products />} />
+              </>
+            )}
+            {user && user.admin === "admin" && (
               <Route path="/admin" element={<Admin />} />
-            }
-            
-            
+            )}
+
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUP />} />
+
             <Route path="/welcome" element={<Welcome />} />
           </Routes>
         </BrowserRouter>

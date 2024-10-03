@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState, useContext } from "react";
+import { useState, useContext,useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { userContext } from "../App";
@@ -29,9 +29,7 @@ const LogIn = () => {
         localStorage.setItem("token", JSON.stringify(response.data.token));
         setToken(response.data.token);
         setSpinner(false);
-        setTimeout(() => {
-          navigate("/welcome");
-        }, 1500);
+        
       }
     } catch (error) {
       console.log(error);
@@ -39,6 +37,14 @@ const LogIn = () => {
       setSpinner(false);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      setTimeout(() => {
+        navigate("/welcome");
+      }, 1500);
+        }
+  }, [token, navigate]);
 
   return (
     <>
