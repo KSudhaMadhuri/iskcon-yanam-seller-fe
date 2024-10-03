@@ -7,7 +7,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
-  const { user, setUser } = useContext(userContext);
+  const { user} = useContext(userContext);
 
   // Handle clicks outside of dropdown or mobile menu
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-gradient-to-r from-indigo-600 to-orange-500 w-full fixed top-0 z-50">
-      <div className="mx-auto max-w-7xl px-1 sm:px-4 lg:px-1">
+      <div className="mx-auto max-w-7xl px-2 sm:px-7 lg:px-7">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button */}
@@ -99,21 +99,21 @@ export default function Navbar() {
                   <>
                     <Link
                       to="/"
-                      className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
                       aria-current="page"
                     >
                       Home
                     </Link>
                     <Link
                       to="/products"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
                     >
                       Products
                     </Link>
 
                     <Link
                       to="/orders"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
                     >
                       Orders
                     </Link>
@@ -122,7 +122,7 @@ export default function Navbar() {
                 {user && user.admin === "admin" && (
                   <Link
                     to="/admin"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
                   >
                     Admin
                   </Link>
@@ -133,13 +133,13 @@ export default function Navbar() {
               <div className="flex space-x-4">
                 <Link
                   to="/login"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white text-nowrap"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white text-nowrap"
                 >
                   Log in
                 </Link>
                 <Link
                   to="/signup"
-                  className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
                 >
                   Sign up
                 </Link>
@@ -158,20 +158,20 @@ export default function Navbar() {
               <>
                 <Link
                   to="/"
-                  className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
                   aria-current="page"
                 >
                   Home
                 </Link>
                 <Link
                   to="/orders"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
                 >
                   Orders
                 </Link>
                 <Link
                   to="/products"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
                 >
                   Products
                 </Link>
@@ -181,20 +181,20 @@ export default function Navbar() {
             {user && user.admin === "admin" && (
               <Link
                 to="/admin"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
               >
                 Admin
               </Link>
             )}
             <Link
               to="/login"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white "
+              className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
             >
               Log in
             </Link>
             <Link
               to="/signup"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
             >
               Sign up
             </Link>

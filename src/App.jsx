@@ -17,7 +17,7 @@ function App() {
   const api = import.meta.env.VITE_API;
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
-  
+
 
   //Retrieving token from local storage
   useEffect(() => {
@@ -37,8 +37,7 @@ function App() {
           },
         });
         if (response) {
-          console.log(response.data);
-          setUser(response.data.getUser);
+          setUser(response.data.getSeller);
         }
       } catch (error) {
         console.log(error);
@@ -53,21 +52,23 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            {user && user.role === "admin" && (
+            {user && user.role === "admin" ? (
               <>
                 <Route path="/" element={<Home />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/products" element={<Products />} />
               </>
-            )}
+            ) : ""}
             {user && user.admin === "admin" && (
               <Route path="/admin" element={<Admin />} />
             )}
 
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUP />} />
-
-            <Route path="/welcome" element={<Welcome />} />
+          
+            {user && user.role === "seller" &&
+              <Route path="/welcome" element={<Welcome />} />
+            }
           </Routes>
         </BrowserRouter>
       </userContext.Provider>

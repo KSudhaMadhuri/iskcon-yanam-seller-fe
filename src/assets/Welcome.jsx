@@ -3,15 +3,12 @@ import { userContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
-  const { token,user } = useContext(userContext);
+  const { user } = useContext(userContext);
   const navigate = useNavigate();
-console.log(user);
+ 
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-    else if(user && user.role === "admin") {
+    if(user && user.role === "admin") {
       navigate("/");
 
     }
