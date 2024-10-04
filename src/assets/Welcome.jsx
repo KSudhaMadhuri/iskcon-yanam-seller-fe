@@ -1,23 +1,24 @@
 import React, { useContext, useEffect } from "react";
 import { userContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineMailOutline } from "react-icons/md";
 
 const Welcome = () => {
   const { user ,token} = useContext(userContext);
   const navigate = useNavigate();
  
-
   useEffect(() => {
-    if(user && user.role === "admin") {
-      navigate("/");
-
-    }else if(!token){
+    if(!token){
       navigate("/login")
     }
+   else if(user && user.role === "admin") {
+      navigate("/");
+
+    } 
   }, [navigate,user ,token]);
 
   return (
-    <section className="text-gray-600 body-font">
+    <section className="text-gray-600 body-font mt-10">
       <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
         <img
           className="w-36 mb-5 object-cover object-center rounded"
@@ -33,8 +34,8 @@ const Welcome = () => {
             maintained seller account.
           </p>
           <div className="flex justify-center">
-            <a href="mailto:iskconyanam@gmail.com" className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-              Contact admin
+            <a href="mailto:iskconyanam@gmail.com" className="flex justify-center items-center gap-2 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+             <MdOutlineMailOutline size={23} /> Contact admin
             </a>
           </div>
         </div>

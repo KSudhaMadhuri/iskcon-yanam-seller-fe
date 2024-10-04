@@ -66,9 +66,9 @@ function App() {
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUP />} />
           
-            {user && user.role === "seller" &&
+ 
               <Route path="/welcome" element={<Welcome />} />
-            }
+         
           </Routes>
         </BrowserRouter>
       </userContext.Provider>
