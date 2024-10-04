@@ -34,13 +34,13 @@ const Welcome = () => {
             maintained seller account.
           </p>
           <div className="flex justify-center">
-            <a href="mailto:iskconyanam@gmail.com" className="flex justify-center items-center gap-2 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+            <a href="mailto:iskconyanamstores@gmail.com" className="flex justify-center items-center gap-2  text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
              <MdOutlineMailOutline size={23} /> Contact admin
             </a>
           </div>
         </div>
       </div>
-        
+      
     </section>
   );
 };
