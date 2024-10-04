@@ -11,7 +11,7 @@ console.log(user);
     if (!token) {
       navigate("/login");
     }
-    else if(user && user.role === "admin") {
+    if(user && user.role === "admin") {
       navigate("/");
 
     }
