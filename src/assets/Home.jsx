@@ -7,7 +7,7 @@ const Home = () => {
     bookName: "",
     bookAuthor: "",
     bookPrice: "",
-    bookImage: image,
+    bookImage: `${image}`,
     bookSummary: "",
     bookPages: "",
     bookLanguage: "",
@@ -21,7 +21,8 @@ const Home = () => {
 
   const fileHandling = (e) => {
     const file = e.target.files[0];
-    setImage(file);
+    console.log(file.name);
+    setImage(file.name);
   };
 
   const formFunc = (e) => {
@@ -36,7 +37,7 @@ const Home = () => {
       </div>
 
       <form
-        className=" p-6 sm:flex  sm:justify-around sm:gap-10 sm:items-center"
+        className=" p-6 sm:flex  sm:justify-around sm:gap-10 sm:items-start"
         onSubmit={formFunc}
       >
         <div className="border-b border-gray-900/10 pb-12">
@@ -51,7 +52,7 @@ const Home = () => {
               <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                 <div className="text-center">
                   <svg
-                    className="mx-auto h-12 w-12 text-gray-300"
+                    className="mx-auto h-50 w-50 text-gray-300"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
@@ -68,15 +69,15 @@ const Home = () => {
                       htmlFor="book-image"
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                     >
-                      <div className="bg-blue-600 text-white w-28 h-10 rounded">
+                      <div className="bg-blue-600 text-white w-28 h-10 flex items-center justify-center rounded">
                         Upload Photo
                       </div>
                       <input
                         id="book-image"
-                      
                         type="file"
                         className="sr-only"
                         onChange={fileHandling}
+                       
                         
                       />
                     </label>
