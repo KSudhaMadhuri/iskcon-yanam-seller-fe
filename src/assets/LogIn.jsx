@@ -49,7 +49,7 @@ const LogIn = () => {
 
   return (
     <>
-    <Home/>
+   
       <ToastContainer
         position="top-center"
         toastClassName="bg-black text-white"
