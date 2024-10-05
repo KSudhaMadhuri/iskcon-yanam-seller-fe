@@ -5,6 +5,7 @@ import { useState, useContext,useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { userContext } from "../App";
+import Home from "./Home";
 
 const LogIn = () => {
   const api = import.meta.env.VITE_API;
@@ -48,6 +49,7 @@ const LogIn = () => {
 
   return (
     <>
+    <Home/>
       <ToastContainer
         position="top-center"
         toastClassName="bg-black text-white"
