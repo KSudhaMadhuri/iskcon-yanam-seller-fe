@@ -52,7 +52,6 @@ function App() {
       try {
         const response = await axios.get(`${api}/book/getbooks`)
         if (response) {
-          console.log(response);
           setProducts(response.data)
         }
       } catch (error) {

@@ -3,12 +3,14 @@ import { userContext } from '../App'
 import { FaRupeeSign } from 'react-icons/fa'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 
 const Products = () => {
   const api = import.meta.env.VITE_API;
   const { products, token, setProducts } = useContext(userContext)
   const [delSpin, setDeSpin] = useState(false)
+  const navigate = useNavigate()
 
   // delete books function 
   const deleteBook = async (itemId) => {
