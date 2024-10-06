@@ -7,7 +7,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
-  const { user, token , setToken} = useContext(userContext);
+  const { user, token, setToken } = useContext(userContext);
   const navigate = useNavigate()
 
   // Handle clicks outside of dropdown or mobile menu
@@ -42,7 +42,7 @@ export default function Navbar() {
   }, [])
 
 
-  const logOut = ()=>{
+  const logOut = () => {
     localStorage.removeItem("token")
     setToken("")
   }
@@ -109,38 +109,42 @@ export default function Navbar() {
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {user && user.role === "admin" && (
-                  <>
-                    <Link
-                      to="/"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
-                      aria-current="page"
-                    >
-                      Home
-                    </Link>
-                    <Link
-                      to="/products"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
-                    >
-                      Products
-                    </Link>
+                {token && <>
 
+                  {user && user.role === "admin" && (
+                    <>
+                      <Link
+                        to="/"
+                        className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
+                        aria-current="page"
+                      >
+                        Home
+                      </Link>
+                      <Link
+                        to="/products"
+                        className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
+                      >
+                        Products
+                      </Link>
+
+                      <Link
+                        to="/orders"
+                        className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
+                      >
+                        Orders
+                      </Link>
+                    </>
+                  )}
+                  {user && user.admin === "admin" && (
                     <Link
-                      to="/orders"
+                      to="/admin"
                       className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
                     >
-                      Orders
+                      Admin
                     </Link>
-                  </>
-                )}
-                {user && user.admin === "admin" && (
-                  <Link
-                    to="/admin"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
-                  >
-                    Admin
-                  </Link>
-                )}
+                  )}
+                </>}
+
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -149,7 +153,7 @@ export default function Navbar() {
 
 
                   <button
-                  onClick={logOut}
+                    onClick={logOut}
                     className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
                   >
                     Log out
@@ -182,63 +186,69 @@ export default function Navbar() {
       {/* Mobile menu, show/hide based on menu state */}
       {mobileMenuOpen && (
         <div className="sm:hidden" id="mobile-menu" ref={mobileMenuRef}>
+
+
           <div className="space-y-1 px-2 pb-3 pt-2">
-            {user && user.role === "admin" && (
+            {token && (
               <>
-                <Link
-                  to="/"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
-                  aria-current="page"
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/orders"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
-                >
-                  Orders
-                </Link>
-                <Link
-                  to="/products"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
-                >
-                  Products
-                </Link>
+                {user && user.role === "admin" && (
+                  <>
+                    <Link
+                      to="/"
+                      className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
+                      aria-current="page"
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      to="/orders"
+                      className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
+                    >
+                      Orders
+                    </Link>
+                    <Link
+                      to="/products"
+                      className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
+                    >
+                      Products
+                    </Link>
+                  </>
+                )}
+
+                {user && user.admin === "admin" && (
+                  <Link
+                    to="/admin"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
+                  >
+                    Admin
+                  </Link>
+                )}
               </>
             )}
 
-            {user && user.admin === "admin" && (
-              <Link
-                to="/admin"
-                className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
-              >
-                Admin
-              </Link>
-            )}
-
-            {token ? 
-               <button
+            {token ?
+              <button
                 onClick={logOut}
-               className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
-             >
-               Log out
-             </button>: <>
-             <Link
-              to="/login"
-              className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
-            >
-              Log in
-            </Link>
-            <Link
-              to="/signup"
-              className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
-            >
-              Sign up
-            </Link>
-             
-             </>
+                className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
+              >
+                Log out
+              </button> : <>
+                <Link
+                  to="/login"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
+                >
+                  Log in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
+                >
+                  Sign up
+                </Link>
+
+              </>
             }
-           
+
 
           </div>
         </div>

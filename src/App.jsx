@@ -17,7 +17,7 @@ function App() {
   const api = import.meta.env.VITE_API;
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
-
+  const [products, setProducts] = useState([])
 
   //Retrieving token from local storage
   useEffect(() => {
@@ -46,9 +46,25 @@ function App() {
     getSeller();
   }, [token]);
 
+  // fetching books data from server
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get(`${api}/book/getbooks`)
+        if (response) {
+          console.log(response);
+          setProducts(response.data)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchBooks()
+  }, [user])
+
   return (
     <>
-      <userContext.Provider value={{ token, setToken, user, setUser }}>
+      <userContext.Provider value={{ token, setToken, user, setUser , products, setProducts }}>
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -65,10 +81,10 @@ function App() {
 
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUP />} />
-          
- 
-              <Route path="/welcome" element={<Welcome />} />
-         
+
+
+            <Route path="/welcome" element={<Welcome />} />
+
           </Routes>
         </BrowserRouter>
       </userContext.Provider>

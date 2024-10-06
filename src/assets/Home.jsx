@@ -1,28 +1,30 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../App"
 
 const Home = () => {
   const api = import.meta.env.VITE_API;
-
+  const { token } = useContext(userContext)
   const [image, setImage] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [bookImage, setBookImage] = useState("");
   const [spinner, setSpinner] = useState(false);
+  const navigate = useNavigate()
 
   const [data, setData] = useState({
     bookName: "",
     bookAuthor: "",
     bookPrice: "",
-    bookImage:"",
+    bookImage: "",
     bookSummary: "",
     bookPages: "",
     bookLanguage: "",
     bookSize: "",
     bookWeight: "",
   });
-console.log(data);
-console.log(bookImage);
+
 
   const formHandle = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -32,7 +34,7 @@ console.log(bookImage);
     const file = e.target.files[0];
     if (file) {
       setImage(file);
-     }
+    }
   };
 
   useEffect(() => {
@@ -46,18 +48,16 @@ console.log(bookImage);
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", "hi1ox6r7");
+
     try {
       const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/${
-          import.meta.env.VITE_CLOUD_NAME
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME
         }/image/upload`,
         formData
       );
       if (response) {
-        setData((prevData)=>({...prevData, bookImage:response.data.secure_url}));
-
+        setData((prevData) => ({ ...prevData, bookImage: response.data.secure_url }));
         setBookImage(response.data.secure_url);
-        console.log(response.data.secure_url)
         setImageLoaded(false);
       }
     } catch (error) {
@@ -69,7 +69,12 @@ console.log(bookImage);
   const formFunc = async (e) => {
     setSpinner(true);
     e.preventDefault();
-    if (bookImage) {
+    if (!bookImage) {
+      toast.error("please upload book image");
+      setSpinner(false);
+
+    } else if (bookImage) {
+
       try {
         const response = await axios.post(`${api}/book/createbooks`, data);
         if (response) {
@@ -92,10 +97,15 @@ console.log(bookImage);
         setSpinner(false);
         console.log(error);
       }
-    } else {
-      toast.error("please upload book image");
     }
   };
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login")
+    }
+
+  }, [token])
 
   return (
     <>
