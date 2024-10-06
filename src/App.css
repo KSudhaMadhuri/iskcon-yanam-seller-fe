@@ -1,16 +1,58 @@
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
     display: none;
 }
 
 /* signup and login page styling */
-.eye-open{
-    position:absolute;
+.eye-open {
+    position: absolute;
     right: 15px;
     top: 10px;
 }
 
-.eye-close{
-    position:absolute;
+.eye-close {
+    position: absolute;
     right: 15px;
     top: 10px;
+}
+
+/* products page styling  */
+
+.update-modal {
+    background-color: rgb(48, 47, 45, 0.5);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.update-sub-card::-webkit-scrollbar {
+    display: none;
+}
+
+.update-sub-card {
+    background-color: white;
+    width: 35%;
+    height: 75%;
+    margin-top: 5rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow: auto;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+
+}
+
+@media (max-width:765px) {
+
+    .update-sub-card {
+        width: 100%;
+        margin: 10px;
+
+    }
 }

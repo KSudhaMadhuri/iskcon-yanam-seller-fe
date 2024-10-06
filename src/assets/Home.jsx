@@ -116,7 +116,7 @@ const Home = () => {
         closeOnClick={true}
         pauseOnHover={true}
       />
-      <div className="mt-25 pt-24 p-6 pb-5">
+      <div className="mt-25 pt-24 border-b-2 mx-4 border-orange-600 p-6 pb-3">
         <h3 className="text-2xl font-semibold mt-25 ">Upload Books</h3>
       </div>
 
@@ -125,7 +125,7 @@ const Home = () => {
         onSubmit={formFunc}
       >
         <div className="border-b border-gray-900/10 pb-12">
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className=" grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="col-span-full ">
               <label
                 htmlFor="book-photo"
@@ -188,12 +188,12 @@ const Home = () => {
           </div>
         </div>
         <div className="space-y-12  ">
-          <div className="border-b border-gray-900/10 pb-12">
+          <div className="">
             <h2 className=" font-semibold text-xl leading-7 text-gray-900">
               Product details
             </h2>
 
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-8">
               <div className="sm:col-span-3">
                 <label
                   htmlFor="book-name"
@@ -232,7 +232,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-3">
                 <label
                   htmlFor="book-price"
                   className=" block text-sm font-medium leading-6 text-gray-900"
@@ -251,29 +251,8 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <div className="col-span-full">
-                    <label
-                      htmlFor="book-summary"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Book Summary
-                    </label>
-                    <div className="mt-2">
-                      <textarea
-                        id="book-summary"
-                        name="bookSummary"
-                        onChange={formHandle}
-                        value={data.bookSummary}
-                        rows={3}
-                        className=" pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-span-full">
+            
+              <div className="col-span-3">
                 <label
                   htmlFor="book-pages"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -292,7 +271,29 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-2 sm:col-start-1">
+              <div className="sm:col-span-2">
+                <div className="mt-2">
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="book-summary"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Book Summary
+                    </label>
+                    <div className="mt-2">
+                      <textarea
+                        id="book-summary"
+                        name="bookSummary"
+                        onChange={formHandle}
+                        value={data.bookSummary}
+                        rows={1}
+                        className=" pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-3 sm:col-start-1">
                 <label
                   htmlFor="book-language"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -311,7 +312,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-3">
                 <label
                   htmlFor="book-size"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -329,7 +330,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-3">
                 <label
                   htmlFor="book-weight"
                   className="block text-sm font-medium leading-6 text-gray-900"
