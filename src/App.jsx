@@ -18,6 +18,8 @@ function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
   const [products, setProducts] = useState([])
+  const [update, setUpdate] = useState(false);
+
 
   //Retrieving token from local storage
   useEffect(() => {
@@ -59,11 +61,11 @@ function App() {
       }
     }
     fetchBooks()
-  }, [user])
+  }, [update])
 
   return (
     <>
-      <userContext.Provider value={{ token, setToken, user, setUser , products, setProducts }}>
+      <userContext.Provider value={{ token, setToken, user, setUser , products, setProducts,update, setUpdate }}>
         <BrowserRouter>
           <Navbar />
           <Routes>
