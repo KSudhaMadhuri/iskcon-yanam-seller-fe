@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { userContext } from '../App'
-import { FaRupeeSign,FaWindowClose ,FaEdit } from 'react-icons/fa'
+import { FaRupeeSign, FaWindowClose, FaEdit } from 'react-icons/fa'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import {  } from 'react-icons/fa'
+import { } from 'react-icons/fa'
 
 
 
@@ -14,7 +14,18 @@ const Products = () => {
   const [delSpin, setDeSpin] = useState(false)
   const navigate = useNavigate()
   const [bookId, setBookId] = useState("")
-  const [bookName , setBookName] = useState("")
+  const [data, setData] = useState({
+    bookName: "",
+    bookAuthor: "",
+    bookPrice: "",
+    bookImage: "",
+    bookSummary: "",
+    bookPages: "",
+    bookLanguage: "",
+    bookSize: "",
+    bookWeight: "",
+  });
+
 
   // delete books function 
   const deleteBook = async (itemId) => {
@@ -37,20 +48,35 @@ const Products = () => {
     }
   }
 
-// bookName update function 
-const BookNameUpdate = async () =>{
-  const formData = new FormData()
-  formData.append()
-  try {
-    const res = await axios.put(`${api}/book/updatebookdetails/${bookId}`)
-    if(res){
-      toast.success("Book Name updated successfully")
-    }
-  } catch (error) {
-    console.log(error);
+
+  const formHandle = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  // bookName update function 
+  const updateBook = async (formData) => {
+
+    try {
+      const res = await axios.put(`${api}/book/updatebookdetails/${bookId}`, formData)
+      if (res) {
+        toast.success(`book details updated successfully`)
+        setData({
+          bookName: "",
+          bookAuthor: "",
+          bookPrice: "",
+          bookImage: "",
+          bookSummary: "",
+          bookPages: "",
+          bookLanguage: "",
+          bookSize: "",
+          bookWeight: "",
+        });
+      }
+    } catch (error) {
+      console.log(error);
       toast.error("Please try again")
+    }
   }
-}
 
   useEffect(() => {
     if (!token) {
@@ -164,9 +190,9 @@ const BookNameUpdate = async () =>{
 
         <div className='update-sub-card relative'>
           <span onClick={() => setBookId("")} className='absolute right-4 cursor-pointer'><FaWindowClose size={20} /></span>
-          <h5 className='font-medium text-lg flex items-center gap-2'><FaEdit/>Update Book Details</h5>
+          <h5 className='font-medium text-lg flex items-center gap-2'><FaEdit />Update Book Details</h5>
           <div className='mb-4  border-b-2  border-orange-500 mt-2 '></div>
-          <div className="sm:col-span- mt-2.5">
+          <div className="mt-2.5">
             <label
               htmlFor="bookName"
               className="block text-sm font-semibold leading-6 text-gray-900"
@@ -178,13 +204,14 @@ const BookNameUpdate = async () =>{
                 type="text"
                 name="bookName"
                 id="bookName"
-                autoComplete="organization"
+                value={data.bookName}
+                onChange={formHandle}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
+              <button onClick={() => updateBook({ bookName: data.bookName })} className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
             </div>
           </div>
-          <div className="sm:col-span- mt-2.5">
+          <div className="mt-2.5">
             <label
               htmlFor="bookAuthor"
               className="block text-sm font-semibold leading-6 text-gray-900"
@@ -196,14 +223,15 @@ const BookNameUpdate = async () =>{
                 type="text"
                 name="bookAuthor"
                 id="bookAuthor"
-                 
+                onChange={formHandle}
+                value={data.bookAuthor}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
+              <button onClick={() => updateBook({ bookAuthor: data.bookAuthor })} className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
             </div>
-          </div>   <div className="sm:col-span- mt-2.5">
+          </div>   <div className="mt-2.5">
             <label
-              htmlFor="bookPrice"
+              htmlFor="book-price"
               className="block text-sm font-semibold leading-6 text-gray-900"
             >
               Book Price
@@ -211,139 +239,119 @@ const BookNameUpdate = async () =>{
             <div className="mt-2.5 flex items-center gap-4">
               <input
                 type="text"
+                id="book-price"
                 name="bookPrice"
-                id="bookPrice"
-                 
+                onChange={formHandle}
+                value={data.bookPrice}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
+              <button onClick={() => updateBook({ bookPrice: data.bookPrice })} className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
             </div>
           </div>
-          <div className="sm:col-span- mt-2.5">
+          <div className="mt-2.5">
             <label
-              htmlFor="bookName"
+              htmlFor="book-pages"
               className="block text-sm font-semibold leading-6 text-gray-900"
             >
-              Book Name
+              Book Pages
             </label>
             <div className="mt-2.5 flex items-center gap-4">
               <input
                 type="text"
-                name="bookName"
-                id="bookName"
+                name="bookPages"
+                id="book-pages"
+                onChange={formHandle}
+                value={data.bookPages}
                 autoComplete="organization"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
-            </div>
-          </div>   <div className="sm:col-span- mt-2.5">
-            <label
-              htmlFor="bookName"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Book Name
-            </label>
-            <div className="mt-2.5 flex items-center gap-4">
-              <input
-                type="text"
-                name="bookName"
-                id="bookName"
-                autoComplete="organization"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
-            </div>
-          </div>   <div className="sm:col-span- mt-2.5">
-            <label
-              htmlFor="bookName"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Book Name
-            </label>
-            <div className="mt-2.5 flex items-center gap-4">
-              <input
-                type="text"
-                name="bookName"
-                id="bookName"
-                autoComplete="organization"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
-            </div>
-          </div>   <div className="sm:col-span- mt-2.5">
-            <label
-              htmlFor="bookName"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Book Name
-            </label>
-            <div className="mt-2.5 flex items-center gap-4">
-              <input
-                type="text"
-                name="bookName"
-                id="bookName"
-                autoComplete="organization"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
-            </div>
-          </div>   <div className="sm:col-span- mt-2.5">
-            <label
-              htmlFor="bookName"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Book Name
-            </label>
-            <div className="mt-2.5 flex items-center gap-4">
-              <input
-                type="text"
-                name="bookName"
-                id="bookName"
-                autoComplete="organization"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
-            </div>
-          </div>   <div className="sm:col-span- mt-2.5">
-            <label
-              htmlFor="bookName"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Book Name
-            </label>
-            <div className="mt-2.5 flex items-center gap-4">
-              <input
-                type="text"
-                name="bookName"
-                id="bookName"
-                autoComplete="organization"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
-            </div>
-          </div>   <div className="sm:col-span- mt-2.5">
-            <label
-              htmlFor="bookName"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Book Name
-            </label>
-            <div className="mt-2.5 flex items-center gap-4">
-              <input
-                type="text"
-                name="bookName"
-                id="bookName"
-                autoComplete="organization"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-              <button className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
+              <button onClick={() => updateBook({ bookPages: data.bookPages })} className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
             </div>
           </div>
-           
-          </div>
-        </div>
+          <div className="mt-2.5">
+            <label
+              htmlFor="book-summary"
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              Book Summary
+            </label>
+            <div className="mt-2.5 flex items-center gap-4">
+              <textarea
+                type="text"
+                id="book-summary"
+                name="bookSummary"
+                onChange={formHandle}
+                value={data.bookSummary}
+                autoComplete="organization"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <button onClick={() => updateBook({ bookSummary: data.bookSummary })} className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
+            </div>
+          </div>   <div className="mt-2.5">
+            <label
+              htmlFor="book-language"
 
-       
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              Book Language
+            </label>
+            <div className="mt-2.5 flex items-center gap-4">
+              <input
+                type="text"
+                id="book-language"
+                name="bookLanguage"
+                autoComplete="organization"
+                onChange={formHandle}
+                value={data.bookLanguage}
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <button onClick={() => updateBook({ bookLanguage: data.bookLanguage })} className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
+            </div>
+          </div>   <div className="mt-2.5">
+            <label
+              htmlFor="book-size"
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              Book Size
+            </label>
+            <div className="mt-2.5 flex items-center gap-4">
+              <input
+                type="text"
+                name="bookSize"
+                id="book-size"
+                onChange={formHandle}
+                value={data.bookSize}
+                autoComplete="organization"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <button onClick={() => updateBook({ bookSize: data.bookSize })} className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
+            </div>
+          </div>   <div className="mt-2.5">
+            <label
+              htmlFor="book-weight"
+
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              Book Weight
+            </label>
+            <div className="mt-2.5 flex items-center gap-4">
+              <input
+                type="text"
+                name="bookWeight"
+                id="book-weight"
+                onChange={formHandle}
+                value={data.bookWeight}
+
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <button onClick={() => updateBook({ bookWeight: data.bookWeight })} className='bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded'>Update</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
         : ""}
     </>
 
