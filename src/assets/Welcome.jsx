@@ -18,7 +18,7 @@ const Welcome = () => {
   }, [navigate,user ,token]);
 
   return (
-    <section className="text-gray-600 body-font mt-10">
+    <section className={user.role === "admin" ? "hidden":"text-gray-600 body-font mt-10"}>
       <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
         <img
           className="w-36 mb-5 object-cover object-center rounded"

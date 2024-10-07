@@ -39,6 +39,8 @@ const Products = () => {
 
 // bookName update function 
 const BookNameUpdate = async () =>{
+  const formData = new FormData()
+  formData.append()
   try {
     const res = await axios.put(`${api}/book/updatebookdetails/${bookId}`)
     if(res){

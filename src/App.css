@@ -15,6 +15,13 @@ body::-webkit-scrollbar {
     top: 10px;
 }
 
+
+/* home page styling  */
+#upload-bt{
+    display:none;
+}
+
+
 /* products page styling  */
 
 .update-modal {

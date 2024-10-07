@@ -169,7 +169,7 @@ const Home = () => {
                         htmlFor="book-image"
                         className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                       >
-                        <div className="bg-blue-600 text-white w-28 h-10 flex items-center justify-center rounded">
+                        <div className="bg-blue-600 text-white w-28 h-10 flex items-center justify-center rounded" id={bookImage ? "upload-bt" : ""}>
                           Upload Photo
                         </div>
 
@@ -193,7 +193,7 @@ const Home = () => {
               Product details
             </h2>
 
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-8">
+            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-6">
               <div className="sm:col-span-3">
                 <label
                   htmlFor="book-name"
@@ -232,7 +232,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-4">
                 <label
                   htmlFor="book-price"
                   className=" block text-sm font-medium leading-6 text-gray-900"
@@ -252,7 +252,7 @@ const Home = () => {
                 </div>
               </div>
             
-              <div className="col-span-3">
+              <div className="col-span-full">
                 <label
                   htmlFor="book-pages"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -271,7 +271,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-5">
                 <div className="mt-2">
                   <div className="col-span-full">
                     <label
@@ -293,7 +293,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="sm:col-span-3 sm:col-start-1">
+              <div className="sm:col-span-2 sm:col-start-1">
                 <label
                   htmlFor="book-language"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -312,7 +312,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-2">
                 <label
                   htmlFor="book-size"
                   className="block text-sm font-medium leading-6 text-gray-900"

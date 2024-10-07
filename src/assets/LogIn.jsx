@@ -54,7 +54,7 @@ const LogIn = () => {
         position="top-center"
         toastClassName="bg-black text-white"
       />
-      <div className=" mt-6 flex min-h-full flex-col justify-center px-6 py-24 lg:px-8">
+      <div className={token ? "hidden" :" mt-6 flex min-h-full flex-col justify-center px-6 py-24 lg:px-8"}>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
           <img
             className="mx-auto h-20 w-auto"
