@@ -69,6 +69,19 @@ const Admin = () => {
     setAdminId(aId)
   }
 
+  // update seller roLe and admin values 
+
+  const upadteSellerFunc =async ()=>{
+    try {
+      const res = await axios.put(`${api}/seller/updatesellerrole/${adminId}`)
+      
+    } catch (error) {
+      console.log(error);
+      toast.error("Please try again")
+      
+    }
+  }
+
   // if not token it navigates to login page 
   useEffect(() => {
     if (!token) {
@@ -166,7 +179,7 @@ const Admin = () => {
             </div>
             <div className="flex items-center  justify-between mt-3">
               <h5 className="font-semibold">Role : </h5>
-              <select className="border border-black rounded">
+              <select value={role} onChange={(e)=> setRole(e.target.value)} className="border border-black rounded">
                 <option value="seller">seller</option>
                 <option value="admin">admin</option>
               </select>
@@ -174,7 +187,7 @@ const Admin = () => {
             </div>
             <div className="flex items-center  justify-between mt-4">
               <h5 className="font-semibold">Admin : </h5>
-              <select className="border border-black rounded">
+              <select value={admin} onChange={(e)=> setAdmin(e.target.value)} className="border border-black rounded">
                 <option className="cursor-pointer" value="seller">seller</option>
                 <option className="cursor-pointer"  value="admin">admin</option>
               </select>
