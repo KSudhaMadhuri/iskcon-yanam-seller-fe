@@ -63,17 +63,26 @@ table,
 th,
 td {
   border: 1px solid black;
-  width: 70%;
+  width: 100%;
 }
 
-td,th {
+td,
+th {
   padding: 10px;
   text-align: center;
   width: 100px;
+  font-weight: 500;
+
 }
 
-@media (max-width: 765px) {
-  table {
-    width: 100%;
-  }
+.seller-modal-card {
+  background-color: rgb(46, 45, 45, 0.5);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

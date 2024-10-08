@@ -154,7 +154,7 @@ export default function Navbar() {
 
                   <button
                     onClick={logOut}
-                    className=" text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-white"
+                    className="bg-indigo-800 text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 hover:text-white"
                   >
                     Log out
                   </button>
