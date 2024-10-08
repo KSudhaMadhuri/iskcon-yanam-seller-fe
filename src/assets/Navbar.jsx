@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../App";
+import {CgProfile} from "react-icons/cg"
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -149,7 +150,12 @@ export default function Navbar() {
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {token ?
+                {token ?<><button
+                    
+                    className="flex items-center justify-between gap-2 text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white  "
+                  >
+                    <CgProfile/>  {user.fullName}
+                  </button>
 
 
                   <button
@@ -157,7 +163,7 @@ export default function Navbar() {
                     className="bg-indigo-800 text-nowrap rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 hover:text-white"
                   >
                     Log out
-                  </button>
+                  </button></>
                   : <>
 
 
@@ -226,13 +232,20 @@ export default function Navbar() {
               </>
             )}
 
-            {token ?
+            {token ?<>
+              <button
+                
+                className=" flex items-center justify-between gap-2  rounded-md px-3 py-2 text-base font-medium text-white "
+              >
+                <CgProfile/> {user.fullName}
+              </button>
+            
               <button
                 onClick={logOut}
-                className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
+                className=" block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "
               >
                 Log out
-              </button> : <>
+              </button></> : <>
                 <Link
                   to="/login"
                   className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white "

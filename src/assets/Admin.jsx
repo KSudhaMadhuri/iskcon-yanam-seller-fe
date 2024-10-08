@@ -86,6 +86,7 @@ const Admin = () => {
           setRoleSpin(false);
           setUpdate(false);
           setAdminId("")
+          setRole("seller")
         }
       } catch (error) {
         console.log(error);
@@ -109,6 +110,7 @@ const Admin = () => {
           setAdminSpin(false);
           setUpdate(false);
           setAdminId("")
+          setAdmin("seller")
         }
       } catch (error) {
         console.log(error);
