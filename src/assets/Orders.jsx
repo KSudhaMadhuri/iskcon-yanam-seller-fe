@@ -25,10 +25,10 @@ const Orders = () => {
         return acc + parseInt(book.bookPrice*book.qty);
       }, 0);
       
-      totalAmount += orderTotal
+      totalAmount = 100000
     });
   
-    setTotalPrice(totalAmount.toLocaleString());
+    setTotalPrice(totalAmount.toLocaleString('en-IN'));
   }, [orders]);
   
 
