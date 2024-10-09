@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { userContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
+
 const Orders = () => {
   const api = import.meta.env.VITE_API;
   const [orders, setOrders] = useState([]);
@@ -14,23 +15,44 @@ const Orders = () => {
   const [update, setUpdate] = useState(false);
   const [orderSpin, setOrderSpin] = useState(false);
   const [totalPrice, setTotalPrice] = useState("");
+  const [totalQty, setTotalQty] = useState("")
+  const [userDetails, setUserDetails] = useState({})
+
+
+  // send mail function
+
+  const sendMail = (orderId) => {
+    const user = orders.find((item) => item._id === orderId)
+    setUserDetails(user)
+  }
 
 
   //Calculating total Amount function logic
   useEffect(() => {
     let totalAmount = 0;
-  
+
     orders.forEach((order) => {
       const orderTotal = order.orderedBooks.reduce((acc, book) => {
-        return acc + parseInt(book.bookPrice*book.qty);
+        return acc + parseInt(book.bookPrice * book.qty);
       }, 0);
-      
+
       totalAmount += orderTotal
     });
-  
+
     setTotalPrice(totalAmount.toLocaleString('en-IN'));
+
+    // total books quantity calclulating function 
+    let tQty = 0;
+    orders.forEach((book) => {
+      const orderQty = book.orderedBooks.reduce((acc, item) => {
+        return acc + parseInt(item.qty)
+      }, 0)
+      tQty += orderQty
+      setTotalQty(tQty)
+    })
+
   }, [orders]);
-  
+
 
   // fetching orders
   useEffect(() => {
@@ -118,42 +140,42 @@ const Orders = () => {
                         </h2>
 
                         <p className="font-semibold mb-1">
-                          Name :{" "}
-                          <span className="font-normal">{item.fullName}</span>
+                          Name :
+                          <span className="font-normal pl-1">{item.fullName}</span>
                         </p>
                         <p className="font-semibold mb-1">
-                          Email :{" "}
-                          <span className="font-normal">{item.email}</span>
+                          Email :
+                          <span className="font-normal pl-1">{item.email}</span>
                         </p>
                         <p className="font-semibold mb-1">
-                          Phone :{" "}
-                          <span className="font-normal">{item.phone}</span>{" "}
+                          Phone :
+                          <span className="font-normal pl-1">{item.phone}</span>
                         </p>
                         <p className="font-semibold mb-1">
-                          Address :{" "}
-                          <span className="font-normal">{item.address}</span>
+                          Address :
+                          <span className="font-normal pl-1">{item.address}</span>
                         </p>
                         <p className="font-semibold mb-1">
-                          City :{" "}
-                          <span className="font-normal">{item.city}</span>
+                          City :
+                          <span className="font-normal pl-1">{item.city}</span>
                         </p>
                         <p className="font-semibold mb-1">
-                          Pin Code :{" "}
-                          <span className="font-normal">{item.pin}</span>
+                          Pin Code :
+                          <span className="font-normal pl-1">{item.pin}</span>
                         </p>
                         <p className="font-semibold mb-1">
-                          State :{" "}
-                          <span className="font-normal">{item.state}</span>{" "}
+                          State :
+                          <span className="font-normal pl-1">{item.state}</span>
                         </p>
                         <h3 className="font-semibold mb-3 mt-3">
-                          TOTAL TYPES OF BOOKS :{" "}
-                          <span className="font-normal">
+                          TOTAL TYPES OF BOOKS :
+                          <span className="font-normal pl-1">
                             {item.orderedBooks.length}
-                          </span>{" "}
+                          </span>
                         </h3>
                         <h3 className="font-semibold mb-3 mt-3">
-                          TOTAL QUANTITY :{" "}
-                          <span className="font-normal">12</span>{" "}
+                          TOTAL QUANTITY :
+                          <span className="font-normal pl-1">{totalQty}</span>
                         </h3>
                       </div>
                       <div className="address-selection sm:flex sm:flex-col sm:justify-start ">
@@ -164,16 +186,16 @@ const Orders = () => {
                           <img
                             src={item.paymentScreenShot}
                             alt="receipt"
-                            className="mt-5 h-52 w-52"
+                            className="mt-5 h-52 w-52 rounded"
                           />
 
                           <h3 className="font-semibold mt-3 cost-details ">
-                            TOTAL COST :{" "}
-                            <span className="text-black">₹{totalPrice}</span>
+                            TOTAL COST :
+                            <span className="text-black pl-1">₹{totalPrice}</span>
                           </h3>
-                          <p className="font-semibold mb-1">
-                            Ordered Date On :{" "}
-                            <span className="font-normal">
+                          <p className="font-semibold mb-1 mt-1">
+                            Ordered Date On :
+                            <span className="font-normal pl-1">
                               {item.orderedDate}
                             </span>
                           </p>
@@ -192,25 +214,25 @@ const Orders = () => {
                           >
                             <img
                               src={bookItem.bookImage}
-                              className="h-52 w-52"
+                              className="h-52 w-52 rounded"
                               alt="Book 1"
                             />
                             <div>
                               <p className="font-semibold h-32 overflow-auto">
-                                Book Name :{" "}
-                                <span className="font-medium text-black">
+                                Book Name :
+                                <span className="font-medium text-black pl-1">
                                   {bookItem.bookName}
                                 </span>
                               </p>
                               <p className="font-semibold">
-                                Price :{" "}
-                                <span className="font-medium text-black">
+                                Price :
+                                <span className="font-medium text-black pl-1">
                                   ₹{bookItem.bookPrice}
                                 </span>
                               </p>
                               <p className="font-semibold">
-                                Quantity :{" "}
-                                <span className="font-medium text-black">
+                                Quantity :
+                                <span className="font-medium text-black pl-1">
                                   {bookItem.qty}
                                 </span>
                               </p>
@@ -219,17 +241,23 @@ const Orders = () => {
                         ))}
                       </div>
                       {delSpin === item._id ? (
-                        <button className="mt-4 bg-red-600 text-white w-36 h-10 rounded">
+                        <button className="mt-4 mr-4 bg-red-600 text-white w-36 h-10 rounded">
                           Deleting order...
                         </button>
                       ) : (
                         <button
                           onClick={() => deleteOrder(item._id)}
-                          className="mt-4 bg-red-600 text-white w-36 h-10 rounded"
+                          className="mt-4 mr-4 bg-red-600 text-white w-36 h-10 rounded"
                         >
                           Delete Order
                         </button>
                       )}
+                      <button
+                        onClick={() => sendMail(item._id)}
+                        className="mt-4 bg-indigo-600 text-white w-36 h-10 rounded"
+                      >
+                        Send Mail
+                      </button>
                     </div>
                   </div>
                 </>
