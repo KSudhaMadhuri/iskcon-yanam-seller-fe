@@ -4,6 +4,7 @@ import { FaRupeeSign, FaWindowClose, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Orders from "./Orders";
 
 const Products = () => {
   const api = import.meta.env.VITE_API;
@@ -21,8 +22,8 @@ const Products = () => {
     bookLanguage: "",
     bookSize: "",
     bookWeight: "",
+    outOfStock: "stock",
   });
-  
 
   // delete books function
   const deleteBook = async (itemId) => {
@@ -53,35 +54,35 @@ const Products = () => {
 
   // bookName update function
   const updateBook = async (formData) => {
-    const ok=confirm("updating book details, are you sure?")
-    if(ok){
-
-    
-    setUpdate(false);
-    try {
-      const res = await axios.put(
-        `${api}/book/updatebookdetails/${bookId}`,
-        formData
-      );
-      if (res) {
-        toast.success(`book details updated successfully`);
-        setUpdate(true);
-        setData({
-          bookName: "",
-          bookAuthor: "",
-          bookPrice: "",
-          bookImage: "",
-          bookSummary: "",
-          bookPages: "",
-          bookLanguage: "",
-          bookSize: "",
-          bookWeight: "",
-        });
+    const ok = confirm("updating book details, are you sure?");
+    if (ok) {
+      setUpdate(false);
+      try {
+        const res = await axios.put(
+          `${api}/book/updatebookdetails/${bookId}`,
+          formData
+        );
+        if (res) {
+          toast.success(`book details updated successfully`);
+          setUpdate(true);
+          setData({
+            bookName: "",
+            bookAuthor: "",
+            bookPrice: "",
+            bookImage: "",
+            bookSummary: "",
+            bookPages: "",
+            bookLanguage: "",
+            bookSize: "",
+            bookWeight: "",
+            outOfStock: "",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Please try again");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Please try again");
-    }}
+    }
   };
 
   useEffect(() => {
@@ -118,8 +119,15 @@ const Products = () => {
                   <img
                     src={item.bookImage}
                     alt={item.bookName}
-                    className="w-36 rounded sm:w-72 sm:h-72 "
+                    className="w-36 rounded sm:w-72 sm:h-72 relative"
                   />
+                  {item.outOfStock === "outofstock" ? (
+                    <button className="absolute   bg-red-600 w-36 text-white rounded h-9 hover:bg-yellow-400">
+                      OUT OF STOCK
+                    </button>
+                  ) : (
+                    ""
+                  )}
                   <button
                     onClick={() => updateModal(item._id)}
                     className="block sm:hidden  bg-blue-600 mt-4 text-white rounded h-9 hover:bg-blue-900"
@@ -183,6 +191,10 @@ const Products = () => {
                       Language :{" "}
                       <span className="text-red-500">{item.bookLanguage}</span>
                     </h2>
+                    <h2 className="text-md font-medium text-gray-900 title-font mb-2">
+                      Stock Status :{" "}
+                      <span className="text-red-500">{item.outOfStock}</span>
+                    </h2>
                   </div>
                   <div className="flex gap-5 items-center">
                     <button
@@ -236,7 +248,6 @@ const Products = () => {
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
-                
                   type="text"
                   name="bookName"
                   id="bookName"
@@ -275,7 +286,33 @@ const Products = () => {
                   Update
                 </button>
               </div>
-            </div>{" "}
+            </div>
+            <div className="mt-2.5">
+              <label
+                htmlFor="outOfStock"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                Out Of Stock
+              </label>
+              <div className="mt-2.5 flex items-center gap-4">
+                <select
+                  name="outOfStock"
+                  id="outOfStock"
+                  onChange={formHandle}
+                  value={data.outOfStock}
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <option value="stock">Stock</option>
+                  <option value="outofstock">Out Of Stock</option>
+                </select>
+                <button
+                  onClick={() => updateBook({ outOfStock: data.outOfStock })}
+                  className="bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
             <div className="mt-2.5">
               <label
                 htmlFor="book-price"

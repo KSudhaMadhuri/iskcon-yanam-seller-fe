@@ -17,10 +17,9 @@ function App() {
   const api = import.meta.env.VITE_API;
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [renderWelcome, setRenderWelcome] = useState(false)
-
+  const [renderWelcome, setRenderWelcome] = useState(false);
 
   //Retrieving token from local storage
   useEffect(() => {
@@ -33,7 +32,7 @@ function App() {
   //fetching seller details from server
   useEffect(() => {
     const getSeller = async () => {
-      setRenderWelcome(true)
+      setRenderWelcome(true);
       try {
         const response = await axios.get(`${api}/seller/getseller`, {
           headers: {
@@ -42,12 +41,11 @@ function App() {
         });
         if (response) {
           setUser(response.data.getSeller);
-          setRenderWelcome(false)
+          setRenderWelcome(false);
         }
       } catch (error) {
         console.log(error);
-        setRenderWelcome(true)
-
+        setRenderWelcome(true);
       }
     };
     getSeller();
@@ -57,20 +55,32 @@ function App() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(`${api}/book/getbooks`)
+        const response = await axios.get(`${api}/book/getbooks`);
         if (response) {
-          setProducts(response.data.reverse())
+          setProducts(response.data.reverse());
         }
       } catch (error) {
         console.log(error);
       }
-    }
-    fetchBooks()
-  }, [update])
+    };
+    fetchBooks();
+  }, [update]);
 
   return (
     <>
-      <userContext.Provider value={{ token, setToken, user, setUser, products, setProducts, update, setUpdate , renderWelcome  }}>
+      <userContext.Provider
+        value={{
+          token,
+          setToken,
+          user,
+          setUser,
+          products,
+          setProducts,
+          update,
+          setUpdate,
+          renderWelcome,
+        }}
+      >
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -80,7 +90,9 @@ function App() {
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/products" element={<Products />} />
               </>
-            ) : ""}
+            ) : (
+              ""
+            )}
             {user && user.admin === "admin" && (
               <Route path="/admin" element={<Admin />} />
             )}
@@ -88,9 +100,7 @@ function App() {
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUP />} />
 
-
             <Route path="/welcome" element={<Welcome />} />
-
           </Routes>
         </BrowserRouter>
       </userContext.Provider>
