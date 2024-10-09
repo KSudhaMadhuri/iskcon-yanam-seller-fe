@@ -1,52 +1,181 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './orders.css'
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import { userContext } from '../App'
+import { useNavigate } from 'react-router-dom';
 
 const Orders = () => {
+  const api = import.meta.env.VITE_API;
+  const [orders, setOrders] = useState([])
+  const [delSpin, setDeSpin] = useState("");
+  const { token } = useContext(userContext)
+  const navigate = useNavigate()
+  const [update, setUpdate] = useState(false);
+
+
+  // fetching orders 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(`${api}/order/getorder`)
+        if (response) {
+          setOrders(response.data.reverse())
+        }
+      } catch (error) {
+        console.error(error);
+
+      }
+    }
+
+    fetchOrders()
+  }, [update])
+
+
+  // delete order function 
+  const deleteOrder = async (orderId) => {
+    const confirmOrder = confirm("Order will be deleted permanently, Are you sure?")
+    if (confirmOrder) {
+      setUpdate(true)
+      setDeSpin(orderId)
+      try {
+        const response = await axios.delete(`${api}/order/delorder/${orderId}`)
+        if (response) {
+          const data = orders.filter((item) => { item._id !== orderId })
+          setOrders(data)
+          toast.success("Order deleted successfully")
+          setDeSpin("")
+          setUpdate(false)
+
+
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Please try again")
+        setDeSpin("")
+
+      }
+    }
+
+  }
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login")
+    }
+
+  }, [token])
+
   return (
-    <div className="checkout-page mt-10 m-4 pt-14">
-    <div className="checkout-container">
-      {/* Personal Details and Address */}
-      <div className="address-section">
-        <h2>PERSONAL DETAILS AND ADDRESS</h2>
-        <div className="personal-info">
-          <h3>Sudha</h3>
-          <p>Email: ksmadhuri736@gmail.com</p>
-          <p>Phone: +918712749123</p>
-        </div>
-        <div className="address-selection">
-          
-          
-          
-        </div>
-        <button className="add-address-btn">ADD NEW ADDRESS</button>
-      </div>
+    <>
+      <ToastContainer
+        position='bottom-center'
+        toastClassName="bg-black text-white"
+      />
+      <div className="checkout-page mt-10 px-2  pt-10">
+        {orders.length ? <>
+          <h5 className='text-2xl mb-2 font-bold text-center'>Total Orders : {orders.length}</h5>
+          {orders.map((item) => (<>
+            <div key={item._id} className="checkout-container  rounded bg-white ">
+              <div className="address-section  flex flex-wrap justify-between ">
+                <div >
+                  <h3 className='font-semibold mb-3 text-xl bg-indigo-600 pl-2 text-white flex items-center  rounded h-9 w-fit pr-2'>Order from : {item.fullName}</h3>
 
-      {/* Order Details */}
-      <div className="order-section overflow-y-auto h-80">
-        <h2>ORDER DETAILS</h2>
-        <div className="order-item">
-          <img src=" /iskcon_logo.jpg" alt="Book 1" />
-          <p>భగవద్గీత యథార్థము ₹604</p>
-        </div>
-        <div className="order-item">
-          <img src="/iskcon_logo.jpg" alt="Book 2" />
-          <p>దేవాది దేవుడు ₹346</p>
-        </div>
-        <div className="order-item">
-          <img src=" /iskcon_logo.jpg" alt="Book 1" />
-          <p>భగవద్గీత యథార్థము ₹604</p>
-        </div>
-        <div className="order-item">
-          <img src="/iskcon_logo.jpg" alt="Book 2" />
-          <p>దేవాది దేవుడు ₹346</p>
-        </div>
+                  <h2 className='font-semibold mb-3'>PERSONAL DETAILS AND ADDRESS</h2>
 
-        <div className="cost-details">
-          <h3>TOTAL COST: ₹950</h3>
-        </div>
+                  <p className='font-semibold mb-1'>Name : <span className='font-normal'>
+                    {item.fullName}
+                  </span>
+                  </p>
+                  <p className='font-semibold mb-1'>Email : <span className='font-normal'>
+                    {item.email}
+                  </span>
+                  </p>
+                  <p className='font-semibold mb-1'>Phone : <span className='font-normal'>
+                    {item.phone}
+                  </span> </p>
+                  <p className='font-semibold mb-1'>Address : <span className='font-normal'>
+                    {item.address}
+                  </span></p>
+                  <p className='font-semibold mb-1' >City :  <span className='font-normal'>
+                    {item.city}
+                  </span></p>
+                  <p className='font-semibold mb-1' >Pin Code :  <span className='font-normal'>
+                    {item.pin}
+                  </span></p>
+                  <p className='font-semibold mb-1'>State : <span className='font-normal'>
+                    {item.state}
+                  </span> </p>
+                  <h3 className='font-semibold mb-3 mt-3'>TOTAL TYPES OF BOOKS :  <span className='font-normal'>
+                    {item.orderedBooks.length}
+                  </span> </h3>
+                  <h3 className='font-semibold mb-3 mt-3'>TOTAL QUANTITY :  <span className='font-normal'>
+                    12
+                  </span> </h3>
+
+                </div>
+                <div className="address-selection sm:flex sm:flex-col sm:justify-start ">
+                  <div className='sm:text-center'>
+
+                    <h2 className='font-semibold mb-3'>PAYMENT RECEIPT</h2>
+                    <img src={item.paymentScreenShot} alt="receipt" className='mt-5 h-52 w-52' />
+
+                    <h3 className='font-semibold mt-3 cost-details '>TOTAL COST : <span className='text-black'>
+
+                      ₹950
+                    </span>
+                    </h3>
+
+
+                  </div>
+
+                </div>
+              </div>
+              <div className="order-section pb-3">
+                <h2 className='font-semibold mb-4 '>ORDER BOOK DETAILS</h2>
+                <div className="order-section overflow-y-auto w-full h-64 border border-gray-400">
+                  {item.orderedBooks.map((bookItem, index) => (
+
+                    <div key={index} className="flex gap-3 border-b-2 py-3 border-gray-400">
+                      <img src={bookItem.bookImage} className='h-52 w-52' alt="Book 1" />
+                      <div>
+
+                        <p className='font-semibold h-32 overflow-auto'>Book Name : <span className='font-medium text-black'>
+                          {bookItem.bookName}
+                        </span></p>
+                        <p className='font-semibold'>Price : <span className='font-medium text-black'>
+                          ₹{bookItem.bookPrice}
+                        </span></p>
+                        <p className='font-semibold'>Quantity : <span className='font-medium text-black'>
+                          {bookItem.qty}
+                        </span></p>
+                      </div>
+                    </div>
+
+                  ))}
+                </div>
+                {delSpin === item._id ?
+                  <button className='mt-4 bg-red-600 text-white w-36 h-10 rounded'>Deleting order...</button>
+
+                  : <button onClick={() => deleteOrder(item._id)} className='mt-4 bg-red-600 text-white w-36 h-10 rounded'>Delete Order</button>
+                }
+
+              </div>
+            </div>
+          </>
+          ))}
+
+
+        </> :
+          <div className='text-center mt-10 pt-10 font-semibold text-xl w-full ' style={{ height: "100vh" }}>
+            Fetching orders...
+          </div>}
+
+
+
+
       </div>
-    </div>
-  </div>
+    </>
   )
 }
 

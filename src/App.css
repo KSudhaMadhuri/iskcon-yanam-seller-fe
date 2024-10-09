@@ -2,6 +2,13 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 /* signup and login page styling */
 .eye-open {
   position: absolute;

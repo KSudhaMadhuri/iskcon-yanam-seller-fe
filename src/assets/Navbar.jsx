@@ -207,16 +207,16 @@ export default function Navbar() {
                       Home
                     </Link>
                     <Link
-                      to="/orders"
-                      className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
-                    >
-                      Orders
-                    </Link>
-                    <Link
                       to="/products"
                       className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
                     >
                       Products
+                    </Link>
+                    <Link
+                      to="/orders"
+                      className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
+                    >
+                      Orders
                     </Link>
                   </>
                 )}

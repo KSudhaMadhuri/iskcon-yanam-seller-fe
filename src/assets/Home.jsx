@@ -6,7 +6,7 @@ import { userContext } from "../App"
 
 const Home = () => {
   const api = import.meta.env.VITE_API;
-  const { token } = useContext(userContext)
+  const { token, setUpdate } = useContext(userContext)
   const [image, setImage] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [bookImage, setBookImage] = useState("");
@@ -74,7 +74,7 @@ const Home = () => {
       setSpinner(false);
 
     } else if (bookImage) {
-
+      setUpdate(true)
       try {
         const response = await axios.post(`${api}/book/createbooks`, data);
         if (response) {
@@ -92,10 +92,14 @@ const Home = () => {
           });
           setBookImage("");
           toast.success("Product uploaded successfully");
+          setUpdate(false)
+
         }
       } catch (error) {
         setSpinner(false);
         console.log(error);
+        toast.success("Please try again");
+
       }
     }
   };
@@ -251,7 +255,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-            
+
               <div className="col-span-full">
                 <label
                   htmlFor="book-pages"

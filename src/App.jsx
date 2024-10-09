@@ -19,6 +19,7 @@ function App() {
   const [user, setUser] = useState({});
   const [products, setProducts] = useState([])
   const [update, setUpdate] = useState(false);
+  const [renderWelcome, setRenderWelcome] = useState(false)
 
 
   //Retrieving token from local storage
@@ -32,6 +33,7 @@ function App() {
   //fetching seller details from server
   useEffect(() => {
     const getSeller = async () => {
+      setRenderWelcome(true)
       try {
         const response = await axios.get(`${api}/seller/getseller`, {
           headers: {
@@ -40,9 +42,12 @@ function App() {
         });
         if (response) {
           setUser(response.data.getSeller);
+          setRenderWelcome(false)
         }
       } catch (error) {
         console.log(error);
+        setRenderWelcome(true)
+
       }
     };
     getSeller();
@@ -54,7 +59,7 @@ function App() {
       try {
         const response = await axios.get(`${api}/book/getbooks`)
         if (response) {
-          setProducts(response.data)
+          setProducts(response.data.reverse())
         }
       } catch (error) {
         console.log(error);
@@ -65,7 +70,7 @@ function App() {
 
   return (
     <>
-      <userContext.Provider value={{ token, setToken, user, setUser , products, setProducts,update, setUpdate }}>
+      <userContext.Provider value={{ token, setToken, user, setUser, products, setProducts, update, setUpdate , renderWelcome  }}>
         <BrowserRouter>
           <Navbar />
           <Routes>
