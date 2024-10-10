@@ -17,6 +17,7 @@ const Orders = () => {
   const [totalPrice, setTotalPrice] = useState("");
   const [totalQty, setTotalQty] = useState("")
   const [userDetails, setUserDetails] = useState({})
+  const [amountDetailsToggle, setAmountDetailsToggle] = useState("")
 
 
   // send mail function
@@ -26,32 +27,28 @@ const Orders = () => {
     setUserDetails(user)
   }
 
-
   //Calculating total Amount function logic
-  useEffect(() => {
+  const getTotalAmount = (orderId) => {
+    setAmountDetailsToggle(orderId)
     let totalAmount = 0;
 
-    orders.forEach((order) => {
-      const orderTotal = order.orderedBooks.reduce((acc, book) => {
-        return acc + parseInt(book.bookPrice * book.qty);
-      }, 0);
-
-      totalAmount += orderTotal
+    const findOrder = orders.find((order) => {
+      return order._id === orderId
     });
-
+    const orderTotal = findOrder.orderedBooks.reduce((acc, book) => {
+      return acc + parseInt(book.bookPrice * book.qty);
+    }, 0);
+    totalAmount += orderTotal
     setTotalPrice(totalAmount.toLocaleString('en-IN'));
 
     // total books quantity calclulating function 
     let tQty = 0;
-    orders.forEach((book) => {
-      const orderQty = book.orderedBooks.reduce((acc, item) => {
-        return acc + parseInt(item.qty)
-      }, 0)
-      tQty += orderQty
-      setTotalQty(tQty)
-    })
-
-  }, [orders]);
+    const orderQty = findOrder.orderedBooks.reduce((acc, item) => {
+      return acc + parseInt(item.qty)
+    }, 0)
+    tQty += orderQty
+    setTotalQty(tQty)
+  }
 
 
   // fetching orders
@@ -175,7 +172,7 @@ const Orders = () => {
                         </h3>
                         <h3 className="font-semibold mb-3 mt-3">
                           TOTAL QUANTITY :
-                          <span className="font-normal pl-1">{totalQty}</span>
+                          {amountDetailsToggle === item._id && <span className="font-normal pl-1">{totalQty}</span>}
                         </h3>
                       </div>
                       <div className="address-selection sm:flex sm:flex-col sm:justify-start ">
@@ -188,11 +185,17 @@ const Orders = () => {
                             alt="receipt"
                             className="mt-5 h-52 w-52 rounded"
                           />
-
-                          <h3 className="font-semibold mt-3 cost-details ">
+                          {amountDetailsToggle === item._id ? <h3 className="font-semibold mt-3 cost-details ">
                             TOTAL COST :
                             <span className="text-black pl-1">₹{totalPrice}</span>
-                          </h3>
+                          </h3> : <button
+                            onClick={() => getTotalAmount(item._id)}
+                            className="mt-4 bg-indigo-600 text-white w-36 h-10 rounded"
+                          >
+                            Get Details
+                          </button>}
+
+
                           <p className="font-semibold mb-1 mt-1">
                             Ordered Date On :
                             <span className="font-normal pl-1">
@@ -254,7 +257,7 @@ const Orders = () => {
                       )}
                       <button
                         onClick={() => sendMail(item._id)}
-                        className="mt-4 bg-indigo-600 text-white w-36 h-10 rounded"
+                        className="mt-4 bg-gray-600 text-white w-36 h-10 rounded"
                       >
                         Send Mail
                       </button>
