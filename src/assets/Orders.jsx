@@ -225,7 +225,7 @@ const Orders = () => {
                           <span className="font-normal pl-1">{item.state}</span>
                         </p>
                         <h3 className="font-semibold mb-3 mt-3">
-                          TOTAL TYPES OF BOOKS :
+                          NUMBER OF ITEMS:
                           <span className="font-normal pl-1">
                             {item.orderedBooks.length}
                           </span>
