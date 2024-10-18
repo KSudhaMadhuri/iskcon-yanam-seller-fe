@@ -67,21 +67,27 @@ const Orders = () => {
 
   // sending mail function
   const submitFunc = async () => {
-    setSubmitSpin(true);
-    try {
-      const res = await axios.post(`${api}/mail/sendmail`, formData);
-      if (res) {
-        toast.success(
-          "Email has been Sent Successfully."
-        );
-        setSubmitSpin(false);
-        setMailCard(false)
+    if (trackNum) {
 
+
+      setSubmitSpin(true);
+      try {
+        const res = await axios.post(`${api}/mail/sendmail`, formData);
+        if (res) {
+          toast.success(
+            "Email has been Sent Successfully."
+          );
+          setSubmitSpin(false);
+          setMailCard(false)
+          setTrackNum("")
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Please try again");
+        setSubmitSpin(false);
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Please try again");
-      setSubmitSpin(false);
+    } else {
+      toast.error("Please Enter Tracking Number")
     }
   };
 
@@ -99,7 +105,7 @@ const Orders = () => {
       return acc + parseInt(book.bookPrice * book.qty);
     }, 0);
     totalAmount += orderTotal
-    setTotalPrice(totalAmount.toLocaleString('en-IN'));
+
 
     // total books quantity calclulating function 
     let tQty = 0;
@@ -108,6 +114,19 @@ const Orders = () => {
     }, 0)
     tQty += orderQty
     setTotalQty(tQty)
+
+
+    // caluculating total grams 
+    let totalGrams = 0
+    const totalBookGrams = findOrder.orderedBooks.reduce((acc, item) => {
+      return acc + parseInt(item.bookWeight * item.qty)
+    }, 0)
+
+    totalGrams += totalBookGrams
+    const gramsAmount = totalGrams / 100
+    const amountWithGst = gramsAmount * 1.20
+    const totalAmountWithCharges = amountWithGst + totalAmount + 17
+    setTotalPrice(totalAmountWithCharges.toLocaleString('en-IN'));
   }
 
 
