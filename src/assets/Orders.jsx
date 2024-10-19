@@ -3,14 +3,13 @@ import "./orders.css";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { userContext } from "../App";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Orders = () => {
   const api = import.meta.env.VITE_API;
-  const [orders, setOrders] = useState([]);
   const [delSpin, setDeSpin] = useState("");
-  const { token } = useContext(userContext);
+  const { token ,orders , setOrders} = useContext(userContext);
   const navigate = useNavigate();
   const [update, setUpdate] = useState(false);
   const [orderSpin, setOrderSpin] = useState(false);
@@ -193,158 +192,50 @@ const Orders = () => {
           Fetching Orders...
         </div>
       ) : (
-        <div className="checkout-page mt-10 px-2  pt-10">
+        <div className="checkout-page mt-10 px-4  pt-10">
           {orders.length ? (
             <>
               <h5 className="text-2xl mb-2 font-bold text-center">
                 Total Orders : {orders.length}
               </h5>
-              {orders.map((item) => (
+              {orders.map((item ,index) => (
                 <>
-                  <div
+                  <Link to={`/orders/${item._id}`}
                     key={item._id}
-                    className="checkout-container  rounded bg-white "
+                    className="checkout-container  rounded "
                   >
-                    <div className="address-section  flex flex-wrap justify-between ">
+                    <div className="address-section p-4 flex flex-wrap justify-between ">
                       <div>
                         <h3 className="font-semibold mb-3 text-xl bg-indigo-600 pl-2 text-white flex items-center  rounded h-9 w-fit pr-2">
-                          Order from : {item.fullName}
+                         {index + 1}. Order from : {item.fullName}
                         </h3>
 
-                        <h2 className="font-semibold mb-3">
-                          PERSONAL DETAILS AND ADDRESS
-                        </h2>
+                       
 
                         <p className="font-semibold mb-1">
                           Name :
                           <span className="font-normal pl-1">{item.fullName}</span>
                         </p>
-                        <p className="font-semibold mb-1">
-                          Email :
-                          <span className="font-normal pl-1">{item.email}</span>
-                        </p>
+                       
                         <p className="font-semibold mb-1">
                           Phone :
                           <span className="font-normal pl-1">{item.phone}</span>
                         </p>
-                        <p className="font-semibold mb-1">
-                          Address :
-                          <span className="font-normal pl-1">{item.address}</span>
-                        </p>
-                        <p className="font-semibold mb-1">
-                          City :
-                          <span className="font-normal pl-1">{item.city}</span>
-                        </p>
-                        <p className="font-semibold mb-1">
-                          Pin Code :
-                          <span className="font-normal pl-1">{item.pin}</span>
-                        </p>
-                        <p className="font-semibold mb-1">
-                          State :
-                          <span className="font-normal pl-1">{item.state}</span>
-                        </p>
-                        <h3 className="font-semibold mb-3 mt-3">
-                          NUMBER OF ITEMS:
-                          <span className="font-normal pl-1">
-                            {item.orderedBooks.length}
-                          </span>
-                        </h3>
-                        <h3 className="font-semibold mb-3 mt-3">
-                          TOTAL QUANTITY :
-                          {amountDetailsToggle === item._id && <span className="font-normal pl-1">{totalQty}</span>}
-                        </h3>
-                      </div>
-                      <div className="address-selection sm:flex sm:flex-col sm:justify-start ">
-                        <div className="sm:text-center">
-                          <h2 className="font-semibold mb-3">
-                            PAYMENT RECEIPT
-                          </h2>
-                          <div className="h-52 overflow-y-auto">
-
-                            <img
-                              src={item.paymentScreenShot}
-                              alt="receipt"
-                              className="mt-5 w-52 rounded"
-                            />
-                          </div>
-                          {amountDetailsToggle === item._id ? <h3 className="font-semibold mt-3 cost-details ">
-                            TOTAL COST :
-                            <span className="text-black pl-1">₹{totalPrice}</span>
-                          </h3> : <button
-                            onClick={() => getTotalAmount(item._id)}
-                            className="mt-4 bg-indigo-600 text-white w-36 h-10 rounded"
-                          >
-                            Get Details
-                          </button>}
-
-
-                          <p className="font-semibold mb-1 mt-1">
+                        
+                        
+                        <p className="font-semibold ">
                             Ordered Date On :
                             <span className="font-normal pl-1">
                               {item.orderedDate}
                             </span>
                           </p>
-                        </div>
+                       
+            
                       </div>
+                   
                     </div>
-                    <div className="order-section pb-3">
-                      <h2 className="font-semibold mb-4 ">
-                        ORDER BOOK DETAILS
-                      </h2>
-                      <div className="order-section overflow-y-auto w-full h-64 border border-gray-400">
-                        {item.orderedBooks.map((bookItem, index) => (
-                          <div
-                            key={index}
-                            className="flex gap-3 border-b-2 py-3 border-gray-400"
-                          >
-                            <img
-                              src={bookItem.bookImage}
-                              className="h-52 w-52 rounded"
-                              alt="Book 1"
-                            />
-                            <div>
-                              <p className="font-semibold h-32 overflow-auto">
-                                Book Name :
-                                <span className="font-medium text-black pl-1">
-                                  {bookItem.bookName}
-                                </span>
-                              </p>
-                              <p className="font-semibold">
-                                Price :
-                                <span className="font-medium text-black pl-1">
-                                  ₹{bookItem.bookPrice}
-                                </span>
-                              </p>
-                              <p className="font-semibold">
-                                Quantity :
-                                <span className="font-medium text-black pl-1">
-                                  {bookItem.qty}
-                                </span>
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      {delSpin === item._id ? (
-                        <button className="mt-4 mr-4 bg-red-600 text-white w-36 h-10 rounded">
-                          Deleting order...
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => deleteOrder(item._id)}
-                          className="mt-4 mr-4 bg-red-600 text-white w-36 h-10 rounded"
-                        >
-                          Delete Order
-                        </button>
-                      )}
-                      <button
-                        onClick={() => sendMail(item._id)}
-                        className="mt-4 bg-gray-600 text-white w-36 h-10 rounded"
-                      >
-                        Send Mail
-                      </button>
-                    </div>
-                  </div>
+                    
+                  </Link>
                 </>
               ))}
             </>

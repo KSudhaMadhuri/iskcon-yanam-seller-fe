@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Welcome from "./assets/Welcome";
 import axios from "axios";
 import Admin from "./assets/Admin";
+import OrderOverView from "./assets/OrderOverView";
 
 export const userContext = createContext();
 function App() {
@@ -20,6 +21,9 @@ function App() {
   const [products, setProducts] = useState([]);
   const [update, setUpdate] = useState(false);
   const [renderWelcome, setRenderWelcome] = useState(false);
+  const [orders, setOrders] = useState([])
+
+
 
   //Retrieving token from local storage
   useEffect(() => {
@@ -79,6 +83,8 @@ function App() {
           update,
           setUpdate,
           renderWelcome,
+          orders,
+          setOrders
         }}
       >
         <BrowserRouter>
@@ -89,6 +95,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/orders/:id" element={<OrderOverView />} />
               </>
             ) : (
               ""
