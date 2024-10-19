@@ -9,7 +9,7 @@ const OrderOverView = () => {
     const api = import.meta.env.VITE_API;
     const [singleOrder, setSingleOrder] = useState([]);
     const [delSpin, setDeSpin] = useState("");
-    const { token, orders, setOrders } = useContext(userContext);
+    const { token, orders} = useContext(userContext);
     const navigate = useNavigate();
     const [totalPrice, setTotalPrice] = useState("");
     const [totalQty, setTotalQty] = useState("")
@@ -18,7 +18,7 @@ const OrderOverView = () => {
     const [trackNum, setTrackNum] = useState("")
     const [mailCard, setMailCard] = useState(false)
     const { id } = useParams()
-    console.log(singleOrder);
+    
 
     // send mail function
     const sendMail = () => {
