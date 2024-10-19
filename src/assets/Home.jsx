@@ -354,7 +354,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="mt-6 flex items-center justify-end gap-x-6">
+          <div className="mt-6 flex items-center justify-start gap-x-6">
             {spinner ? (
               <button
                 type="button"

@@ -9,41 +9,40 @@ const OrderOverView = () => {
     const api = import.meta.env.VITE_API;
     const [singleOrder, setSingleOrder] = useState([]);
     const [delSpin, setDeSpin] = useState("");
-    const { token, orders} = useContext(userContext);
+    const { token, orders } = useContext(userContext);
     const navigate = useNavigate();
     const [totalPrice, setTotalPrice] = useState("");
     const [totalQty, setTotalQty] = useState("")
-    const [userDetails] = useState(singleOrder)
+
     const [submitSpin, setSubmitSpin] = useState(false)
     const [trackNum, setTrackNum] = useState("")
     const [mailCard, setMailCard] = useState(false)
     const { id } = useParams()
-    
+
 
     // send mail function
     const sendMail = () => {
         setMailCard(true)
     }
 
-
     const formData = {
-        to: userDetails.email,
+        to: singleOrder.email,
         subject: "ISKCON YANAM STORES - Order Shipped Successfully",
         html: `
-        <h2>Dear ${userDetails.fullName},</h2>
+        <h2>Dear ${singleOrder.fullName},</h2>
         <p>We are delighted to inform you that your order from <strong>ISKCON YANAM STORES</strong> has been successfully shipped!</p>
         
         <h3>Customer Details:</h3>
         <ul>
-          <li><strong>Customer Name:</strong> ${userDetails.fullName}</li>
-          <li><strong>Customer Email:</strong> ${userDetails.email}</li>
+          <li><strong>Customer Name:</strong> ${singleOrder.fullName}</li>
+          <li><strong>Customer Email:</strong> ${singleOrder.email}</li>
         
         </ul>
     
         <h3>Shipping Address:</h3>
         <p>
-          ${userDetails.city},<br>
-          ${userDetails.address}, ${userDetails.state} - ${userDetails.pin},<br>
+          ${singleOrder.city},<br>
+          ${singleOrder.address}, ${singleOrder.state} - ${singleOrder.pin},<br>
         
         </p>
     
@@ -98,7 +97,6 @@ const OrderOverView = () => {
             }, 0);
             totalAmount += orderTotal
 
-
             // total books quantity calclulating function 
             let tQty = 0;
             const orderQty = singleOrder.orderedBooks.reduce((acc, item) => {
@@ -106,7 +104,6 @@ const OrderOverView = () => {
             }, 0)
             tQty += orderQty
             setTotalQty(tQty)
-
 
             // caluculating total grams 
             let totalGrams = 0
@@ -121,7 +118,6 @@ const OrderOverView = () => {
             setTotalPrice(totalAmountWithCharges.toLocaleString('en-IN'));
         }
         if (singleOrder.orderedBooks?.length > 0) {
-
             getTotalAmount()
         }
 
@@ -171,7 +167,7 @@ const OrderOverView = () => {
         <>
             <ToastContainer
                 position="bottom-center"
-                toastClassName="bg-black text-white"
+                theme='dark'
             />
 
             <div className="checkout-page mt-10 px-2  pt-10">
@@ -339,7 +335,7 @@ const OrderOverView = () => {
                 <div onClick={() => setMailCard(false)} className="fixed top-0 left-0 px-3 bg-gray-700 o bg-opacity-50 w-screen h-screen flex justify-center items-center">
                     <div onClick={(e) => e.stopPropagation()} className="bg-white p-5 rounded w-[20rem]">
                         <h5 className="mb-2 text-lg font-semibold">Track Number</h5>
-                        <input type="text" className="pl-4 h-10 w-full mb-3 outline-none rounded-full border-2 border-orange-600" name="trackNumn" value={trackNum} onChange={(e) => setTrackNum(e.target.value)} />
+                        <input type="text" className="pl-4 h-10 w-full mb-3 outline-none rounded-full border-2  border-orange-600" name="trackNumn" placeholder='Ex : abc12334' value={trackNum} onChange={(e) => setTrackNum(e.target.value)} />
                         {submitSpin ?
                             <button className="bg-blue-700 text-white h-8 w-[8rem] rounded-full">Sending...</button>
                             :
