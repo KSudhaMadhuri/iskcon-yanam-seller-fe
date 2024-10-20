@@ -19,7 +19,6 @@ const OrderOverView = () => {
     const [mailCard, setMailCard] = useState(false)
     const { id } = useParams()
 
-
     // send mail function
     const sendMail = () => {
         setMailCard(true)
@@ -322,10 +321,7 @@ const OrderOverView = () => {
                             </div>
                         </div>
                     </>
-
                 </>
-
-
             </div>
 
 
