@@ -252,7 +252,7 @@ const OrderOverView = () => {
                                         </h5>
                                         <h5 className="font-semibold mt-3 cost-details ">
                                             Total Charges :
-                                            <span className="text-black pl-1">₹{orderMode === "takeaway" ?  "0" : totalcharges.toLocaleString("en-IN")}</span>
+                                            <span className="text-black pl-1">₹{singleOrder.orderMode === "takeaway" ?  "0" : totalcharges.toLocaleString("en-IN")}</span>
                                         </h5>
                                         <h3 className="font-semibold mt-3 cost-details ">
                                             TOTAL COST :
