@@ -13,10 +13,11 @@ const OrderOverView = () => {
     const navigate = useNavigate();
     const [totalPrice, setTotalPrice] = useState("");
     const [totalQty, setTotalQty] = useState("")
-
+    const [totalcharges, setTotalCharges] = useState("")
     const [submitSpin, setSubmitSpin] = useState(false)
     const [trackNum, setTrackNum] = useState("")
     const [mailCard, setMailCard] = useState(false)
+    const [itemsAmount , setItemsAmount] = useState("")
     const { id } = useParams()
 
     // send mail function
@@ -58,7 +59,6 @@ const OrderOverView = () => {
       `,
     };
 
-
     // sending mail function
     const submitFunc = async () => {
         if (trackNum) {
@@ -95,6 +95,7 @@ const OrderOverView = () => {
                 return acc + parseInt(book.bookPrice * book.qty);
             }, 0);
             totalAmount += orderTotal
+            setItemsAmount(totalAmount)
 
             // total books quantity calclulating function 
             let tQty = 0;
@@ -113,6 +114,7 @@ const OrderOverView = () => {
             totalGrams += totalBookGrams
             const gramsAmount = totalGrams / 100
             const amountWithGst = gramsAmount * 1.20
+            setTotalCharges(amountWithGst + 17)
             const totalAmountWithCharges = amountWithGst + totalAmount + 17
             setTotalPrice(totalAmountWithCharges.toLocaleString('en-IN'));
         }
@@ -215,6 +217,9 @@ const OrderOverView = () => {
                                     <p className="font-semibold mb-1">
                                         State :
                                         <span className="font-normal pl-1">{singleOrder.state}</span>
+                                    </p><p className="font-semibold mb-1">
+                                        Delivery Mode :
+                                        <span className="font-normal pl-1">{singleOrder.orderMode}</span>
                                     </p>
                                     <h3 className="font-semibold mb-3 mt-3">
                                         NUMBER OF ITEMS:
@@ -241,6 +246,14 @@ const OrderOverView = () => {
                                                 className="mt-5 w-52 rounded"
                                             />
                                         </div>
+                                        <h5 className="font-semibold mt-3 cost-details ">
+                                            Total items Amount :
+                                            <span className="text-black pl-1">₹{ itemsAmount.toLocaleString("en-IN")}</span>
+                                        </h5>
+                                        <h5 className="font-semibold mt-3 cost-details ">
+                                            Total Charges :
+                                            <span className="text-black pl-1">₹{orderMode === "takeaway" ?  "0" : totalcharges.toLocaleString("en-IN")}</span>
+                                        </h5>
                                         <h3 className="font-semibold mt-3 cost-details ">
                                             TOTAL COST :
                                             <span className="text-black pl-1">₹{totalPrice.toLocaleString("en-IN")}</span>
@@ -298,7 +311,6 @@ const OrderOverView = () => {
                                         ))}
                                     </> : ""}
 
-
                                 </div>
                                 {delSpin ? (
                                     <button className="mt-4 mr-4 bg-red-600 text-white w-36 h-10 rounded">
@@ -315,8 +327,7 @@ const OrderOverView = () => {
                                 <button
                                     onClick={() => sendMail(singleOrder._id)}
                                     className="mt-4 bg-gray-600 text-white w-36 h-10 rounded"
-                                >
-                                    Send Mail
+                                > Send Mail
                                 </button>
                             </div>
                         </div>
@@ -324,10 +335,8 @@ const OrderOverView = () => {
                 </>
             </div>
 
-
             {/* mail card  */}
             {mailCard &&
-
                 <div onClick={() => setMailCard(false)} className="fixed top-0 left-0 px-3 bg-gray-700 o bg-opacity-50 w-screen h-screen flex justify-center items-center">
                     <div onClick={(e) => e.stopPropagation()} className="bg-white p-5 rounded w-[20rem]">
                         <h5 className="mb-2 text-lg font-semibold">Track Number</h5>
