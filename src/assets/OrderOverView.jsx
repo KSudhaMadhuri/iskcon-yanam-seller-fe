@@ -217,10 +217,11 @@ const OrderOverView = () => {
                                     <p className="font-semibold mb-1">
                                         State :
                                         <span className="font-normal pl-1">{singleOrder.state}</span>
-                                    </p><p className="font-semibold mb-1">
-                                        Delivery Mode :
-                                        <span className="font-normal pl-1">{singleOrder.orderMode}</span>
-                                    </p>
+                                    </p> 
+                                    <h3 className="font-semibold mb-3 mt-3">
+                                        ORDER MODE :
+                                        <span className="font-normal bg-orange-600 ml-1 px-1 py-1 rounded text-white">{singleOrder.orderMode}</span>
+                                    </h3>
                                     <h3 className="font-semibold mb-3 mt-3">
                                         NUMBER OF ITEMS:
                                         <span className="font-normal pl-1">
@@ -246,22 +247,22 @@ const OrderOverView = () => {
                                                 className="mt-5 w-52 rounded"
                                             />
                                         </div>
-                                        <h5 className="font-semibold mt-3 cost-details ">
-                                            Total items Amount :
+                                        <h5 className="font-semibold mt-3 text-orange-600 text-lg ">
+                                            Total items ({singleOrder.orderedBooks?.length > 0 && singleOrder.orderedBooks.length}) :
                                             <span className="text-black pl-1">₹{ itemsAmount.toLocaleString("en-IN")}</span>
                                         </h5>
-                                        <h5 className="font-semibold mt-3 cost-details ">
+                                        <h5 className="font-semibold mt-3  text-orange-600 text-lg">
                                             Total Charges :
                                             <span className="text-black pl-1">₹{singleOrder.orderMode === "takeaway" ?  "0" : totalcharges.toLocaleString("en-IN")}</span>
                                         </h5>
                                         <h3 className="font-semibold mt-3 cost-details ">
                                             TOTAL COST :
-                                            <span className="text-black pl-1">₹{totalPrice.toLocaleString("en-IN")}</span>
+                                            <span className="text-black pl-1">₹{singleOrder.orderMode === "takeaway" ? itemsAmount.toLocaleString("en-IN")  :  totalPrice.toLocaleString("en-IN")}</span>
                                         </h3>
 
 
                                         <p className="font-semibold mb-1 mt-1">
-                                            Ordered Date On :
+                                            Ordered On :
                                             <span className="font-normal pl-1">
                                                 {singleOrder.orderedDate}
                                             </span>

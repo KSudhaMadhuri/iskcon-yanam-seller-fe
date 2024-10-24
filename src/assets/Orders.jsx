@@ -109,12 +109,12 @@ const Orders = () => {
                         </p>
                         <p className="font-semibold mb-1">
                           Order Mode :
-                          <span className="font-normal pl-1">{item.orderMode}</span>
+                          <span className="font-normal ml-1 bg-orange-700 px-1 py-1 rounded text-white">{item.orderMode}</span>
                         </p>
 
 
                         <p className="font-semibold ">
-                          Ordered Date On :
+                          Ordered On :
                           <span className="font-normal pl-1">
                             {item.orderedDate}
                           </span>
