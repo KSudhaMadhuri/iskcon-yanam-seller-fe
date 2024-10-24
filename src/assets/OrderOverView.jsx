@@ -113,9 +113,10 @@ const OrderOverView = () => {
 
             totalGrams += totalBookGrams
             const gramsAmount = totalGrams / 100
-            const amountWithGst = gramsAmount * 1.20
-            setTotalCharges(amountWithGst + 17)
-            const totalAmountWithCharges = amountWithGst + totalAmount + 17
+            const postAndGrams = gramsAmount + 17 
+            const amountWithGst = postAndGrams * 1.18
+            setTotalCharges(amountWithGst + 16)
+            const totalAmountWithCharges = amountWithGst + totalAmount + 16
             setTotalPrice(totalAmountWithCharges.toLocaleString('en-IN'));
         }
         if (singleOrder.orderedBooks?.length > 0) {

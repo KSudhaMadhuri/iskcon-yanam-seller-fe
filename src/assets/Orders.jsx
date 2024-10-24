@@ -10,7 +10,6 @@ const Orders = () => {
   const api = import.meta.env.VITE_API;
   const { token, orders, setOrders } = useContext(userContext);
   const navigate = useNavigate();
-  const [update, setUpdate] = useState(false);
   const [orderSpin, setOrderSpin] = useState(false);
 
 
@@ -32,34 +31,9 @@ const Orders = () => {
     };
 
     fetchOrders();
-  }, [update]);
+  }, []);
 
-  // delete order function
-  const deleteOrder = async (orderId) => {
-    const confirmOrder = confirm(
-      "Order will be deleted permanently, Are you sure?"
-    );
-    if (confirmOrder) {
-      setUpdate(true);
-      setDeSpin(orderId);
-      try {
-        const response = await axios.delete(`${api}/order/delorder/${orderId}`);
-        if (response) {
-          const data = orders.filter((item) => {
-            item._id !== orderId;
-          });
-          setOrders(data);
-          toast.success("Order deleted successfully");
-          setDeSpin("");
-          setUpdate(false);
-        }
-      } catch (error) {
-        console.error(error);
-        toast.error("Please try again");
-        setDeSpin("");
-      }
-    }
-  };
+   
 
   useEffect(() => {
     if (!token) {
