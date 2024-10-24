@@ -23,8 +23,10 @@ const Home = () => {
     bookLanguage: "",
     bookSize: "",
     bookWeight: "",
+    itemType: ""
   });
 
+console.log(data);
 
   const formHandle = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -89,6 +91,7 @@ const Home = () => {
             bookLanguage: "",
             bookSize: "",
             bookWeight: "",
+            itemType: ""
           });
           setBookImage("");
           toast.success("Product uploaded successfully");
@@ -203,7 +206,7 @@ const Home = () => {
                   htmlFor="book-name"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Name
+                  Book Name <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -222,7 +225,7 @@ const Home = () => {
                   htmlFor="book-author"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Author
+                  Book Author <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -241,7 +244,7 @@ const Home = () => {
                   htmlFor="book-price"
                   className=" block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Price
+                  Book Price <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -261,7 +264,7 @@ const Home = () => {
                   htmlFor="book-pages"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Pages
+                  Book Pages <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -302,7 +305,7 @@ const Home = () => {
                   htmlFor="book-language"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Language
+                  Book Language <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -339,10 +342,11 @@ const Home = () => {
                   htmlFor="book-weight"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Weight
+                  Book Weight <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
+                    required
                     type="text"
                     name="bookWeight"
                     id="book-weight"
@@ -350,6 +354,29 @@ const Home = () => {
                     value={data.bookWeight}
                     className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                </div>
+              </div>
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="itemType"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Item type <span className="text-red-600 text-lg">*</span>
+                </label>
+                <div className="mt-2">
+                  <select
+                     required
+                    name="itemType"
+                    id="itemType"
+                    onChange={formHandle}
+                    value={data.itemType}
+                    className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option value="" disabled>Select The Item Type..</option>
+                    <option value="book">Book</option>
+                    <option value="other">Other</option>
+
+                  </select>
                 </div>
               </div>
             </div>
