@@ -150,17 +150,17 @@ const Products = () => {
                 </div>
                 <div className="md:flex-grow">
                   <h2 className="text-md font-medium text-gray-900 title-font mb-2">
-                    Book Name :{" "}
+                    Item Name :{" "}
                     <span className="text-red-500">{item.bookName}</span>
                   </h2>
                   <h5 className="font-medium overflow-auto h-14 sm:h-34 sm:mb-2">
-                    Book Summary :{" "}
+                    Summary :{" "}
                     <span className="text-red-500 font-medium ">
                       {item.bookSummary}
                     </span>
                   </h5>
                   <div className=" flex gap-2 items-center font-medium mb-2">
-                    Book Price :
+                    Item Price :
                     <span className="flex items-center">
                       <FaRupeeSign size={13} color="red" />
                       <h2 className="text-md font-medium  text-red-500 title-font ">
@@ -171,7 +171,7 @@ const Products = () => {
                     </span>
                   </div>
                   <h2 className="text-md font-medium text-gray-900 title-font mb-2">
-                    Book Author :{" "}
+                    Author :{" "}
                     <span className="text-red-500">{item.bookAuthor}</span>
                   </h2>
                   <h2 className="text-md font-medium text-gray-900 title-font mb-2">
@@ -180,7 +180,7 @@ const Products = () => {
                   </h2>
                   <div className="sm:flex sm:items-center sm:gap-10">
                     <h2 className="text-md font-medium text-gray-900 title-font mb-2">
-                      Book Size :{" "}
+                    Size :{" "}
                       <span className="text-red-500">{item.bookSize}</span>
                     </h2>
                     <h2 className="text-md font-medium text-gray-900 title-font mb-2">
@@ -226,8 +226,8 @@ const Products = () => {
       {/* update modal  */}
 
       {bookId ? (
-        <div className=" update-modal">
-          <div className="update-sub-card relative">
+        <div className=" update-modal"   onClick={() => setBookId("")}>
+          <div className="update-sub-card relative" onClick={(e)=> e.stopPropagation()}>
             <span
               onClick={() => setBookId("")}
               className="absolute right-4 cursor-pointer"
@@ -244,7 +244,7 @@ const Products = () => {
                 htmlFor="bookName"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                Book Name
+                Item Name
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
@@ -256,6 +256,7 @@ const Products = () => {
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 <button
+                
                   onClick={() => updateBook({ bookName: data.bookName })}
                   className="bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded"
                 >
@@ -268,7 +269,7 @@ const Products = () => {
                 htmlFor="bookAuthor"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                Book Author
+                Author
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
@@ -318,7 +319,7 @@ const Products = () => {
                 htmlFor="book-price"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                Book Price
+                Item Price
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
@@ -342,7 +343,7 @@ const Products = () => {
                 htmlFor="book-pages"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                Book Pages
+                 Item Pages
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
@@ -367,7 +368,7 @@ const Products = () => {
                 htmlFor="book-summary"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                Book Summary
+                Summary
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <textarea
@@ -392,7 +393,7 @@ const Products = () => {
                 htmlFor="book-language"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                Book Language
+                Language
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
@@ -419,7 +420,7 @@ const Products = () => {
                 htmlFor="book-size"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                Book Size
+              Size
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
@@ -444,7 +445,7 @@ const Products = () => {
                 htmlFor="book-weight"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                Book Weight
+                Weight
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input

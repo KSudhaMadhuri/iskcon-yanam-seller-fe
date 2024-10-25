@@ -124,7 +124,7 @@ console.log(data);
         pauseOnHover={true}
       />
       <div className="mt-25 pt-24 border-b-2 mx-4 border-orange-600 p-6 pb-3">
-        <h3 className="text-2xl font-semibold mt-25 ">Upload Books</h3>
+        <h3 className="text-2xl font-semibold mt-25 ">Upload Products</h3>
       </div>
 
       <form
@@ -138,7 +138,7 @@ console.log(data);
                 htmlFor="book-photo"
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                Book Image
+                Item Image
               </label>
               <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                 <div className="text-center">
@@ -206,7 +206,7 @@ console.log(data);
                   htmlFor="book-name"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Name <span className="text-red-600 text-lg">*</span>
+                  Item Name <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -225,7 +225,7 @@ console.log(data);
                   htmlFor="book-author"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Author <span className="text-red-600 text-lg">*</span>
+                  Item Author <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -244,7 +244,7 @@ console.log(data);
                   htmlFor="book-price"
                   className=" block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Price <span className="text-red-600 text-lg">*</span>
+                  Item Price <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -264,7 +264,7 @@ console.log(data);
                   htmlFor="book-pages"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Pages <span className="text-red-600 text-lg">*</span>
+                  Item Pages <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -285,7 +285,7 @@ console.log(data);
                       htmlFor="book-summary"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Book Summary
+                      Summary
                     </label>
                     <div className="mt-2">
                       <textarea
@@ -305,7 +305,7 @@ console.log(data);
                   htmlFor="book-language"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Language <span className="text-red-600 text-lg">*</span>
+                  Item Language <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -324,7 +324,7 @@ console.log(data);
                   htmlFor="book-size"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Size
+                  Item Size
                 </label>
                 <div className="mt-2">
                   <input
@@ -342,7 +342,7 @@ console.log(data);
                   htmlFor="book-weight"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Book Weight <span className="text-red-600 text-lg">*</span>
+                  Item Weight <span className="text-red-600 text-lg">*</span>
                 </label>
                 <div className="mt-2">
                   <input

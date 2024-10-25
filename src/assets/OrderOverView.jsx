@@ -17,7 +17,7 @@ const OrderOverView = () => {
     const [submitSpin, setSubmitSpin] = useState(false)
     const [trackNum, setTrackNum] = useState("")
     const [mailCard, setMailCard] = useState(false)
-    const [itemsAmount , setItemsAmount] = useState("")
+    const [itemsAmount, setItemsAmount] = useState("")
     const { id } = useParams()
 
     // send mail function
@@ -113,15 +113,45 @@ const OrderOverView = () => {
 
             totalGrams += totalBookGrams
             const gramsAmount = totalGrams / 100
-            const postAndGrams = gramsAmount + 17 
+            const postAndGrams = gramsAmount + 17
             const amountWithGst = postAndGrams * 1.18
             setTotalCharges(amountWithGst + 16)
             const totalAmountWithCharges = amountWithGst + totalAmount + 16
             setTotalPrice(totalAmountWithCharges.toLocaleString('en-IN'));
+
+
+            // calculating for book and other items charges 
+            const baseGrams = 500
+            const basePirce = 19
+            const postCharges = 17
+            const coverCharges = 16
+            const extraCharges = 16
+
+            const removedGrams = totalGrams > baseGrams ? totalGrams - basePirce : false
+            const remGrams = removedGrams === false ? 1 : removedGrams / 500
+            const roundNum = remGrams <= 1 ? 1 : remGrams
+            const roundedNumber = Math.ceil(roundNum);
+            const multipleAmount = roundedNumber === 1 ? false : roundedNumber * extraCharges
+            const addingAllPrices = multipleAmount === false ? basePirce + postCharges : multipleAmount + basePirce + postCharges
+            const withGst = addingAllPrices * 1.18
+            const finalAmount = (totalAmount + withGst + coverCharges).toFixed(2)
+            const itemType = singleOrder.orderedBooks.some((item) => item.itemType === "other")
+
+            if (itemType === true) {
+                setTotalPrice(finalAmount)
+                const totalch = finalAmount - totalAmount
+                setTotalCharges(totalch)
+            } else if (itemType === false) {
+                setTotalPrice(totalAmountWithCharges)
+                const bookTo = totalAmountWithCharges - totalAmount
+                setTotalCharges(bookTo)
+            }
+
         }
         if (singleOrder.orderedBooks?.length > 0) {
             getTotalAmount()
         }
+
 
     }, [singleOrder])
 
@@ -218,7 +248,7 @@ const OrderOverView = () => {
                                     <p className="font-semibold mb-1">
                                         State :
                                         <span className="font-normal pl-1">{singleOrder.state}</span>
-                                    </p> 
+                                    </p>
                                     <h3 className="font-semibold mb-3 mt-3">
                                         ORDER MODE :
                                         <span className="font-normal bg-orange-600 ml-1 px-1 py-1 rounded text-white">{singleOrder.orderMode}</span>
@@ -250,15 +280,15 @@ const OrderOverView = () => {
                                         </div>
                                         <h5 className="font-semibold mt-3 text-orange-600 text-lg ">
                                             Total items ({singleOrder.orderedBooks?.length > 0 && singleOrder.orderedBooks.length}) :
-                                            <span className="text-black pl-1">₹{ itemsAmount.toLocaleString("en-IN")}</span>
+                                            <span className="text-black pl-1">₹{itemsAmount.toLocaleString("en-IN")}</span>
                                         </h5>
                                         <h5 className="font-semibold mt-3  text-orange-600 text-lg">
                                             Total Charges :
-                                            <span className="text-black pl-1">₹{singleOrder.orderMode === "takeaway" ?  "0" : totalcharges.toLocaleString("en-IN")}</span>
+                                            <span className="text-black pl-1">₹{singleOrder.orderMode === "takeaway" ? "0" : totalcharges.toLocaleString("en-IN")}</span>
                                         </h5>
                                         <h3 className="font-semibold mt-3 cost-details ">
                                             TOTAL COST :
-                                            <span className="text-black pl-1">₹{singleOrder.orderMode === "takeaway" ? itemsAmount.toLocaleString("en-IN")  :  totalPrice.toLocaleString("en-IN")}</span>
+                                            <span className="text-black pl-1">₹{singleOrder.orderMode === "takeaway" ? itemsAmount.toLocaleString("en-IN") : totalPrice.toLocaleString("en-IN")}</span>
                                         </h3>
 
 
@@ -273,7 +303,7 @@ const OrderOverView = () => {
                             </div>
                             <div className="order-section pb-3">
                                 <h2 className="font-semibold mb-4 ">
-                                    ORDER BOOK DETAILS
+                                    ORDER ITEMS DETAILS
                                 </h2>
                                 <div className="order-section w-full border border-gray-400">
 
@@ -291,7 +321,7 @@ const OrderOverView = () => {
                                                 />
                                                 <div>
                                                     <p className="font-semibold h-32 overflow-auto">
-                                                        Book Name :
+                                                        Item Name :
                                                         <span className="font-medium text-black pl-1">
                                                             {item.bookName}
                                                         </span>
