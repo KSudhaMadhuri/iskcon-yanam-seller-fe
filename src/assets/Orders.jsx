@@ -67,7 +67,7 @@ const Orders = () => {
                     <div className="address-section p-4 flex flex-wrap justify-between ">
                       <div>
                         <h3 className="font-semibold mb-3 text-xl bg-indigo-600 pl-2 text-white flex items-center  rounded h-9 w-fit pr-2">
-                          {index + 1}. Order from : {item.fullName}
+                          {index + 1}. Order from : {item.fullName.substring(0,10)}
                         </h3>
 
 

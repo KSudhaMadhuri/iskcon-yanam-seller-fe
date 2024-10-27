@@ -26,7 +26,7 @@ const Home = () => {
     itemType: ""
   });
 
-console.log(data);
+
 
   const formHandle = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });

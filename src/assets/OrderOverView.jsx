@@ -115,9 +115,10 @@ const OrderOverView = () => {
             const gramsAmount = totalGrams / 100
             const postAndGrams = gramsAmount + 17
             const amountWithGst = postAndGrams * 1.18
-            setTotalCharges(amountWithGst + 16)
+            // const tawg = amountWithGst + 16
+            // setTotalCharges(tawg.toFixed(2))
             const totalAmountWithCharges = amountWithGst + totalAmount + 16
-            setTotalPrice(totalAmountWithCharges.toLocaleString('en-IN'));
+            // setTotalPrice(totalAmountWithCharges.toLocaleString('en-IN'));
 
 
             // calculating for book and other items charges 
@@ -140,11 +141,11 @@ const OrderOverView = () => {
             if (itemType === true) {
                 setTotalPrice(finalAmount)
                 const totalch = finalAmount - totalAmount
-                setTotalCharges(totalch)
+                setTotalCharges(totalch.toFixed(2))
             } else if (itemType === false) {
-                setTotalPrice(totalAmountWithCharges)
+                setTotalPrice(totalAmountWithCharges.toFixed(2))
                 const bookTo = totalAmountWithCharges - totalAmount
-                setTotalCharges(bookTo)
+                setTotalCharges(bookTo.toFixed(2))
             }
 
         }
@@ -206,7 +207,7 @@ const OrderOverView = () => {
 
                 <>
                     <h5 className="text-2xl mb-2 font-bold text-center">
-                        Order from : {singleOrder.fullName}
+                        Order from : {singleOrder.fullName?.substring(0,10)}
                     </h5>
 
                     <>
