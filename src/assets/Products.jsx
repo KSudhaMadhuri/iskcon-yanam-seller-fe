@@ -4,12 +4,14 @@ import { FaRupeeSign, FaWindowClose, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Orders from "./Orders";
+
 
 const Products = () => {
   const api = import.meta.env.VITE_API;
   const { token, products, setProducts, setUpdate } = useContext(userContext);
   const [delSpin, setDeSpin] = useState(false);
+  const [image, setImage] = useState(null);
+  const [isDisabled, setIsDisabled] = useState("")
   const navigate = useNavigate();
   const [bookId, setBookId] = useState("");
   const [data, setData] = useState({
@@ -52,9 +54,49 @@ const Products = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+
+  const fileHandling = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+    }
+  };
+
+  useEffect(() => {
+    if (image) {
+      uploadImage();
+    }
+  }, [image]);
+
+  const uploadImage = async () => {
+
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "hi1ox6r7");
+
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME
+        }/image/upload`,
+        formData
+      );
+      if (response) {
+        setData((prevData) => ({ ...prevData, bookImage: response.data.secure_url }));
+        toast.success("Product Image URL generated and now can click update")
+        setIsDisabled(response.data.secure_url)
+      }
+    } catch (error) {
+      console.log(error);
+
+    }
+  };
+
+
+
+
   // bookName update function
   const updateBook = async (formData) => {
-    const ok = confirm("updating book details, are you sure?");
+    const ok = confirm("updating Product details, are you sure?");
     if (ok) {
       setUpdate(false);
       try {
@@ -63,7 +105,7 @@ const Products = () => {
           formData
         );
         if (res) {
-          toast.success(`book details updated successfully`);
+          toast.success(`Product details updated successfully`);
           setUpdate(true);
           setData({
             bookName: "",
@@ -77,6 +119,8 @@ const Products = () => {
             bookWeight: "",
             outOfStock: "",
           });
+
+          setIsDisabled("")
         }
       } catch (error) {
         console.log(error);
@@ -99,10 +143,8 @@ const Products = () => {
     <>
       <ToastContainer
         position="top-center"
-        toastClassName="bg-black text-white"
-        hideProgressBar={true}
-        closeOnClick={true}
-        pauseOnHover={true}
+        theme="dark"
+
       />
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
@@ -180,7 +222,7 @@ const Products = () => {
                   </h2>
                   <div className="sm:flex sm:items-center sm:gap-10">
                     <h2 className="text-md font-medium text-gray-900 title-font mb-2">
-                    Size :{" "}
+                      Size :{" "}
                       <span className="text-red-500">{item.bookSize}</span>
                     </h2>
                     <h2 className="text-md font-medium text-gray-900 title-font mb-2">
@@ -226,8 +268,8 @@ const Products = () => {
       {/* update modal  */}
 
       {bookId ? (
-        <div className=" update-modal"   onClick={() => setBookId("")}>
-          <div className="update-sub-card relative" onClick={(e)=> e.stopPropagation()}>
+        <div className=" update-modal" onClick={() => setBookId("")}>
+          <div className="update-sub-card relative" onClick={(e) => e.stopPropagation()}>
             <span
               onClick={() => setBookId("")}
               className="absolute right-4 cursor-pointer"
@@ -236,9 +278,37 @@ const Products = () => {
             </span>
             <h5 className="font-medium text-lg flex items-center gap-2">
               <FaEdit />
-              Update Book Details
+              Update Product Details
             </h5>
             <div className="mb-4  border-b-2  border-orange-500 mt-2 "></div>
+
+            <div className="mt-2.5">
+              <label
+                htmlFor="bookImage"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                Product Image
+              </label>
+              <div className="mt-2.5 flex items-center gap-4">
+                <input
+                  type="file"
+                  name="bookImage"
+                  id="bookImage"
+                  onChange={fileHandling}
+                  className="relative  block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />{isDisabled && 
+                
+                <img src={isDisabled} alt="book" className="w-24 h-24"/>
+                }
+                <button
+                 
+                  onClick={() => updateBook({ bookImage: data.bookImage })}
+                  className="bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
             <div className="mt-2.5">
               <label
                 htmlFor="bookName"
@@ -256,7 +326,7 @@ const Products = () => {
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 <button
-                
+
                   onClick={() => updateBook({ bookName: data.bookName })}
                   className="bg-blue-600 text-white hover:bg-blue-800 w-1/3 h-10 rounded"
                 >
@@ -343,7 +413,7 @@ const Products = () => {
                 htmlFor="book-pages"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-                 Item Pages
+                Item Pages
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
@@ -420,7 +490,7 @@ const Products = () => {
                 htmlFor="book-size"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
-              Size
+                Size
               </label>
               <div className="mt-2.5 flex items-center gap-4">
                 <input
