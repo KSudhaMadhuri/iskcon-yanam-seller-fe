@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { userContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
+import { FaCopy } from 'react-icons/fa6';
 
 const OrderOverView = () => {
     const api = import.meta.env.VITE_API;
@@ -83,6 +84,16 @@ const OrderOverView = () => {
         }
     };
 
+    // copying Payment id function 
+    const copyPaymentId = async () => {
+        try {
+            await navigator.clipboard.writeText(singleOrder.paymentScreenShot)
+            toast.success("Payment Id Copied Successfully")
+        } catch (error) {
+            console.error(error);
+            toast.error("Please try again Payment Id has not copied")
+        }
+    }
 
     useEffect(() => {
 
@@ -106,7 +117,7 @@ const OrderOverView = () => {
             setTotalQty(tQty)
 
             // caluculating total grams 
-            let totalGrams = 0
+            let totalGrams = 30
             const totalBookGrams = singleOrder.orderedBooks.reduce((acc, item) => {
                 return acc + parseInt(item.bookWeight * item.qty)
             }, 0)
@@ -115,10 +126,9 @@ const OrderOverView = () => {
             const gramsAmount = totalGrams / 100
             const postAndGrams = gramsAmount + 17
             const amountWithGst = postAndGrams * 1.18
-            // const tawg = amountWithGst + 16
-            // setTotalCharges(tawg.toFixed(2))
+          
             const totalAmountWithCharges = amountWithGst + totalAmount + 16
-            // setTotalPrice(totalAmountWithCharges.toLocaleString('en-IN'));
+            
 
 
             // calculating for book and other items charges 
@@ -128,12 +138,12 @@ const OrderOverView = () => {
             const coverCharges = 16
             const extraCharges = 16
 
-            const removedGrams = totalGrams > baseGrams ? totalGrams - basePirce : false
+            const removedGrams = totalGrams > baseGrams ? totalGrams - baseGrams : false
             const remGrams = removedGrams === false ? 1 : removedGrams / 500
             const roundNum = remGrams <= 1 ? 1 : remGrams
             const roundedNumber = Math.ceil(roundNum);
-            const multipleAmount = roundedNumber === 1 ? false : roundedNumber * extraCharges
-            const addingAllPrices = multipleAmount === false ? basePirce + postCharges : multipleAmount + basePirce + postCharges
+            const multipleAmount = roundedNumber === 1 ? 16 : roundedNumber * extraCharges
+            const addingAllPrices = totalGrams < baseGrams ?  basePirce + postCharges : multipleAmount + basePirce + postCharges
             const withGst = addingAllPrices * 1.18
             const finalAmount = (totalAmount + withGst + coverCharges).toFixed(2)
             const itemType = singleOrder.orderedBooks.some((item) => item.itemType === "other")
@@ -207,7 +217,7 @@ const OrderOverView = () => {
 
                 <>
                     <h5 className="text-2xl mb-2 font-bold text-center">
-                        Order from : {singleOrder.fullName?.substring(0,10)}
+                        Order from : {singleOrder.fullName?.substring(0, 10)}
                     </h5>
 
                     <>
@@ -267,18 +277,27 @@ const OrderOverView = () => {
                                     </h3>
                                 </div>
                                 <div className="address-selection sm:flex sm:flex-col sm:justify-start ">
-                                    <div className="sm:text-center">
+                                    <div className="sm:text-start">
                                         <h2 className="font-semibold mb-3">
-                                            PAYMENT RECEIPT
+                                            PAYMENT DETAILS
                                         </h2>
-                                        <div className="h-64 overflow-y-auto">
 
-                                            <img
-                                                src={singleOrder.paymentScreenShot}
-                                                alt="receipt"
-                                                className="mt-5 w-52 rounded"
-                                            />
-                                        </div>
+
+                                        {/* <p className="font-semibold mb-1">
+                                            Payment Id :
+                                            <span className="font-normal pl-1">{singleOrder.paymentScreenShot}
+
+                                                <span onClick={copyPaymentId} className='mt-2 flex text-blue-500 cursor-pointer font-medium items-center gap-1'>
+
+                                                    <FaCopy /> Copy Payment Id
+                                                </span>
+                                            </span>
+                                        </p> */}
+
+
+
+
+
                                         <h5 className="font-semibold mt-3 text-orange-600 text-lg ">
                                             Total items ({singleOrder.orderedBooks?.length > 0 && singleOrder.orderedBooks.length}) :
                                             <span className="text-black pl-1">₹{itemsAmount.toLocaleString("en-IN")}</span>
