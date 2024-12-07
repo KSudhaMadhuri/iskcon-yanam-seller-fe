@@ -117,7 +117,7 @@ const OrderOverView = () => {
             setTotalQty(tQty)
 
             // caluculating total grams 
-            let totalGrams = 30
+            let totalGrams = 20
             const totalBookGrams = singleOrder.orderedBooks.reduce((acc, item) => {
                 return acc + parseInt(item.bookWeight * item.qty)
             }, 0)
@@ -133,18 +133,27 @@ const OrderOverView = () => {
 
             // calculating for book and other items charges 
             const baseGrams = 500
-            const basePirce = 19
+            const basePrice = 19
             const postCharges = 17
-            const coverCharges = 16
+            const coverCharges = 10
             const extraCharges = 16
 
-            const removedGrams = totalGrams > baseGrams ? totalGrams - baseGrams : false
+            const removedGrams = totalGrams <= baseGrams ? false : totalGrams
             const remGrams = removedGrams === false ? 1 : removedGrams / 500
             const roundNum = remGrams <= 1 ? 1 : remGrams
             const roundedNumber = Math.ceil(roundNum);
-            const multipleAmount = roundedNumber === 1 ? 16 : roundedNumber * extraCharges
-            const addingAllPrices = totalGrams < baseGrams ?  basePirce + postCharges : multipleAmount + basePirce + postCharges
-            const withGst = addingAllPrices * 1.18
+            const multipleAmount = roundedNumber === 1 ? false : roundedNumber * extraCharges
+            // console.log(multipleAmount);
+            
+            const addingAllPrices =  multipleAmount === false ?  basePrice  : multipleAmount + 3
+            // console.log(addingAllPrices);
+            
+            const addedPostCharges = addingAllPrices + postCharges
+            // console.log(addedPostCharges);
+            
+            const withGst = addedPostCharges * 1.18
+            // console.log(withGst);
+            
             const finalAmount = (totalAmount + withGst + coverCharges).toFixed(2)
             const itemType = singleOrder.orderedBooks.some((item) => item.itemType === "other")
 
